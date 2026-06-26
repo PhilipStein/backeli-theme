@@ -1,0 +1,41 @@
+{% comment %}
+  Bäckeli brand overrides — fonts, heading tracking, brand color tokens, CTA styling.
+
+  Rendered in layout/theme.liquid AFTER `theme-styles-variables` and `color-palette`
+  so it overrides Horizon's font CSS variables. Keep ALL brand-level CSS here (not in
+  assets/base.css) so Horizon theme updates don't clobber it.
+
+  Fredoka + Nunito are NOT in Shopify's font library, so the Shopify font pickers in
+  Theme settings will still show a fallback face — that is expected. The actual fonts
+  are loaded from Google Fonts in theme.liquid and mapped onto Horizon's font vars below.
+{% endcomment %}
+{% style %}
+  :root {
+    /* Brand fonts override Horizon's font_picker variables */
+    --font-body--family: "Nunito", system-ui, -apple-system, sans-serif;
+    --font-body--weight: 400;
+    --font-subheading--family: "Nunito", system-ui, -apple-system, sans-serif;
+    --font-subheading--weight: 700;
+    --font-heading--family: "Fredoka", system-ui, -apple-system, sans-serif;
+    --font-heading--weight: 600;
+    --font-accent--family: "Fredoka", system-ui, -apple-system, sans-serif;
+    --font-accent--weight: 600;
+
+    /* Demo heading tracking (-0.01em on h1-h4) */
+    --font-h1--letter-spacing: -0.01em;
+    --font-h2--letter-spacing: -0.01em;
+    --font-h3--letter-spacing: -0.01em;
+    --font-h4--letter-spacing: -0.01em;
+
+    /* Exact brand color tokens (OKLCH from the prototype) for custom section CSS */
+    --brand-yellow: oklch(0.85 0.16 88);
+    --brand-blue: oklch(0.74 0.14 235);
+    --brand-cream: oklch(0.99 0 0);
+    --brand-ink: oklch(0.28 0.05 245);
+  }
+
+  /* Brand CTA buttons carry tracked uppercase labels (case is set via theme settings) */
+  .button {
+    letter-spacing: 0.1em;
+  }
+{% endstyle %}
