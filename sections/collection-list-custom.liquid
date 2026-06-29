@@ -31,16 +31,29 @@
     collection-list-custom
     spacing-style
   "
-  style="{% render 'spacing-style', settings: section.settings %}"
+  style="
+    {% render 'spacing-style', settings: section.settings %}
+    --side-margin-desktop: {{ section.settings.side_margin }}px;
+  "
   data-testid="collection-list-custom"
 >
   {% if has_header %}
     <div class="collection-list-custom__header collection-list-custom__header--{{ section.settings.header_alignment }}">
       {% if section.settings.heading != blank %}
-        <h2 class="collection-list-custom__heading">{{ section.settings.heading }}</h2>
+        <h2
+          class="collection-list-custom__heading"
+          {% if section.settings.heading_color != blank %}style="color: {{ section.settings.heading_color }};"{% endif %}
+        >
+          {{ section.settings.heading }}
+        </h2>
       {% endif %}
       {% if section.settings.subheading != blank %}
-        <p class="collection-list-custom__subheading">{{ section.settings.subheading }}</p>
+        <p
+          class="collection-list-custom__subheading"
+          {% if section.settings.subheading_color != blank %}style="color: {{ section.settings.subheading_color }};"{% endif %}
+        >
+          {{ section.settings.subheading }}
+        </p>
       {% endif %}
     </div>
   {% endif %}
@@ -86,6 +99,12 @@
     display: grid;
     grid-template-columns: repeat(var(--columns-desktop, 3), minmax(0, 1fr));
     gap: var(--grid-gap, 12px);
+  }
+
+  @media screen and (min-width: 750px) {
+    .collection-list-custom {
+      padding-inline: var(--side-margin-desktop, 0px);
+    }
   }
 
   @media screen and (max-width: 749px) {
@@ -142,6 +161,18 @@
         }
       ],
       "default": "left"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "info": "Leave blank to inherit the section text color."
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading color",
+      "info": "Leave blank to inherit the section text color."
     },
     {
       "type": "header",
@@ -201,6 +232,17 @@
         }
       ],
       "default": "page-width"
+    },
+    {
+      "type": "range",
+      "id": "side_margin",
+      "label": "Side margin (desktop)",
+      "info": "Adds space to the left and right of the section on desktop.",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 0
     },
     {
       "type": "color",
