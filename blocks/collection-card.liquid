@@ -8,7 +8,8 @@
     id: 'collection-card-image',
     closest.collection: collection,
     parent_block_id: block.id,
-    image_override: block.settings.image %}
+    image_override: block.settings.image,
+    ratio_override: block.settings.image_ratio %}
 {% endcapture %}
 
 {% capture children %}
@@ -55,6 +56,42 @@
       "id": "image",
       "label": "Custom image",
       "info": "Optional. Overrides the collection's image for this card. Falls back to the collection image, then a placeholder."
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Aspect ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "Auto (image's own ratio)"
+        },
+        {
+          "value": "tall-9-16",
+          "label": "Tall (9:16)"
+        },
+        {
+          "value": "tall-5-7",
+          "label": "Portrait (5:7)"
+        },
+        {
+          "value": "portrait",
+          "label": "Portrait (4:5)"
+        },
+        {
+          "value": "square",
+          "label": "Square (1:1)"
+        },
+        {
+          "value": "wide-7-5",
+          "label": "Landscape (7:5)"
+        },
+        {
+          "value": "landscape",
+          "label": "Landscape (16:9)"
+        }
+      ],
+      "default": "portrait"
     },
     {
       "type": "header",

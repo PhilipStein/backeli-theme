@@ -10,6 +10,16 @@ Added **Heading color** and **Subheading color** pickers to the collection grid 
 | --- | --- |
 | [sections/collection-list-custom.liquid](sections/collection-list-custom.liquid) | Added `heading_color` / `subheading_color` settings, applied as inline `color` only when set. |
 
+## 2026-06-29 — Collection grid: editable aspect ratio per card
+
+The **Aspect ratio** control now lives on the **Collection card** block itself (next to the Custom image picker), so it's editable in the theme editor. Previously it sat on the private, static `_collection-card-image` sub-block, whose settings aren't reachable in the editor — so the ratio couldn't actually be changed. The parent's choice is forwarded down to the image and wins over the sub-block's value.
+
+| File | Change |
+| --- | --- |
+| [blocks/collection-card.liquid](blocks/collection-card.liquid) | Added an **Aspect ratio** select (Auto / 9:16 / 5:7 / 4:5 / 1:1 / 7:5 / 16:9, default 4:5) and forwards it to the image as `ratio_override`. |
+| [blocks/_collection-card-image.liquid](blocks/_collection-card-image.liquid) | Accepts `ratio_override` and passes it through to `resource-image`. |
+| [snippets/resource-image.liquid](snippets/resource-image.liquid) | New optional `image_ratio` param overrides the block's own setting; falls back to it when absent. |
+
 ## 2026-06-29 — Collection grid: more aspect ratios + desktop side margin
 
 Each collection card can now use more **image aspect ratios**, and the collection grid section can be inset from the left and right edges on desktop.

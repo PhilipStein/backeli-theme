@@ -8,6 +8,7 @@
   @param {object} [image_source] - Image object for articles. For collections, an optional custom image that overrides the collection's own image (otherwise auto-determined from closest.collection).
   @param {string} parent_block_id - Parent block ID for CSS targeting
   @param {object} block_settings - Block settings object
+  @param {string} [image_ratio] - Optional aspect-ratio override (adapt | tall-9-16 | tall-5-7 | portrait | square | wide-7-5 | landscape). Falls back to block_settings.image_ratio.
   @param {object} [section_settings] - Section settings for layout-aware sizing
   @param {string} [block_attributes] - Block shopify attributes for theme editor
 
@@ -37,6 +38,8 @@
   assign block_settings = block_settings | default: empty
   assign section_settings = section_settings | default: empty
   assign block_attributes = block_attributes | default: ''
+  # Optional aspect-ratio override (e.g. lifted to a parent block); falls back to this block's own setting
+  assign image_ratio = image_ratio | default: block_settings.image_ratio
 
   # Early return if required parameters missing
   unless parent_block_id != blank and block_settings != empty
@@ -64,7 +67,7 @@
 
   # Calculate aspect ratio
   assign ratio = 1
-  case block_settings.image_ratio
+  case image_ratio
     when 'landscape'
       assign ratio = '16 / 9'
     when 'wide-7-5'
