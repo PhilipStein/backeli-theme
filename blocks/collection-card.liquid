@@ -7,7 +7,8 @@
     type: '_collection-card-image',
     id: 'collection-card-image',
     closest.collection: collection,
-    parent_block_id: block.id %}
+    parent_block_id: block.id,
+    image_override: block.settings.image %}
 {% endcapture %}
 
 {% capture children %}
@@ -48,6 +49,12 @@
       "type": "collection",
       "id": "collection",
       "label": "t:settings.collection"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Custom image",
+      "info": "Optional. Overrides the collection's image for this card. Falls back to the collection image, then a placeholder."
     },
     {
       "type": "header",

@@ -25,18 +25,11 @@
     {% endif %}
 
     {%- render 'meta-tags' -%}
-
-    {%- comment -%} Bäckeli brand fonts (Fredoka + Nunito) — not in Shopify's font library, loaded from Google Fonts {%- endcomment -%}
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap">
-
     {%- render 'stylesheets' -%}
     {%- render 'fonts' -%}
     {%- render 'scripts' -%}
     {%- render 'theme-styles-variables' -%}
     {%- render 'color-palette' -%}
-    {%- render 'brand-styles' -%}
 
     {% if request.design_mode %}
       {%- render 'theme-editor' -%}

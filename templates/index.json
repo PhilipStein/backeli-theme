@@ -6,7 +6,8 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */
+{
   "sections": {
     "hero_jVaWmY": {
       "type": "hero",
@@ -15,18 +16,18 @@
           "type": "text",
           "name": "t:names.heading",
           "settings": {
-            "text": "<p>Browse our latest products</p>",
-            "text_color": "{{ settings.color_palette.background }}",
+            "text": "<p>a Taste of Germany</p>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
-            "type_preset": "h2",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
+            "type_preset": "custom",
+            "font": "var(--font-heading--family)",
+            "font_size": "4.5rem",
             "line_height": "normal",
             "letter_spacing": "normal",
             "case": "none",
             "wrap": "pretty",
+            "text_color": "{{ settings.color_palette.background }}",
             "background": false,
             "background_color": "#00000026",
             "corner_radius": 0,
@@ -37,37 +38,47 @@
           },
           "blocks": {}
         },
-        "button_H9gpTf": {
-          "type": "button",
-          "name": "t:names.button",
+        "text_hyePFz": {
+          "type": "text",
+          "name": "t:names.text",
           "settings": {
-            "label": "Shop all",
-            "link": "shopify://collections/all",
-            "open_in_new_tab": false,
-            "style_class": "button-custom",
-            "custom_button_background": "rgba(0,0,0,0)",
-            "custom_button_text": "{{ settings.color_palette.background }}",
-            "custom_button_border": "{{ settings.color_palette.background }}",
-            "width": "fit-content",
-            "custom_width": 100,
-            "width_mobile": "fit-content",
-            "custom_width_mobile": 100
+            "text": "<p>Authentic German breads, rolls and pastries - honestly crafted , freshly baked, and delivered throughout Miami.</p>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "center",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "1.5rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "text_color": "{{ settings.color_palette.background }}",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
           },
           "blocks": {}
         }
       },
       "block_order": [
         "text_YLPk4p",
-        "button_H9gpTf"
+        "text_hyePFz"
       ],
       "name": "t:names.hero",
       "settings": {
         "media_type_1": "image",
+        "image_1": "shopify://shop_images/hero-bakery-new.png",
         "media_type_2": "image",
         "stack_media_on_mobile": false,
         "custom_mobile_media": false,
         "media_type_1_mobile": "image",
         "media_type_2_mobile": "image",
+        "link": "",
         "open_in_new_tab": false,
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -75,13 +86,13 @@
         "vertical_alignment": "flex-end",
         "align_baseline": true,
         "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "flex-end",
+        "vertical_alignment_flex_direction_column": "center",
         "gap": 24,
         "section_width": "page-width",
         "section_height": "medium",
         "section_height_custom": 50,
         "background_color": "rgba(0,0,0,0)",
-        "toggle_overlay": true,
+        "toggle_overlay": false,
         "overlay_color": "#12121266",
         "overlay_style": "solid",
         "gradient_direction": "to bottom",
@@ -91,188 +102,163 @@
         "padding-block-end": 72
       }
     },
-    "product_list_fa6P9H": {
-      "type": "product-list",
+    "collection_list_NPc3aB": {
+      "type": "collection-list-custom",
       "blocks": {
-        "static-header": {
-          "type": "_product-list-content",
-          "name": "t:names.header",
-          "static": true,
+        "card_1": {
+          "type": "collection-card",
+          "name": "t:names.collection_card",
           "settings": {
-            "content_direction": "row",
-            "vertical_on_mobile": false,
-            "horizontal_alignment": "space-between",
+            "collection": "",
+            "image": "",
+            "placement": "on_image",
+            "horizontal_alignment": "flex-start",
             "vertical_alignment": "flex-end",
-            "align_baseline": true,
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "background_media": "none",
-            "video_position": "cover",
-            "background_image_position": "cover",
+            "collection_card_gap": 8,
+            "background_color": "",
             "border": "none",
             "border_width": 1,
             "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "border_color": "",
+            "border_radius": 0
           },
           "blocks": {
-            "product_list_text_YFtzcL": {
-              "type": "_product-list-text",
+            "collection-card-image": {
+              "type": "_collection-card-image",
+              "static": true,
+              "settings": {
+                "image_ratio": "portrait"
+              }
+            },
+            "title": {
+              "type": "collection-title",
               "name": "t:names.collection_title",
               "settings": {
-                "text": "<h3>{{ closest.collection.title }}</h3>",
-                "width": "fit-content",
-                "max_width": "normal",
+                "type_preset": "h5",
                 "alignment": "left",
-                "type_preset": "h4",
-                "font": "var(--font-body--family)",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "product_list_button_MWeP9V": {
-              "type": "_product-list-button",
-              "name": "t:names.product_list_button",
-              "settings": {
-                "label": "View all",
-                "open_in_new_tab": false,
-                "style_class": "link",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
+                "background": true,
+                "background_color": "#ffffff",
+                "text_color": "{{ settings.color_palette.foreground }}",
+                "padding-block-start": 4,
+                "padding-block-end": 4,
+                "padding-inline-start": 8,
+                "padding-inline-end": 8
               },
               "blocks": {}
             }
           },
           "block_order": [
-            "product_list_text_YFtzcL",
-            "product_list_button_MWeP9V"
+            "title"
           ]
         },
-        "static-product-card": {
-          "type": "_product-card",
-          "name": "t:names.product_card",
-          "static": true,
+        "card_2": {
+          "type": "collection-card",
+          "name": "t:names.collection_card",
           "settings": {
-            "product_card_gap": 4,
+            "collection": "",
+            "image": "",
+            "placement": "on_image",
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "flex-end",
+            "collection_card_gap": 8,
+            "background_color": "",
             "border": "none",
             "border_width": 1,
             "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "border_color": "",
+            "border_radius": 0
           },
           "blocks": {
-            "product_card_gallery_677WP3": {
-              "type": "_product-card-gallery",
-              "name": "t:names.product_card_media",
+            "collection-card-image": {
+              "type": "_collection-card-image",
+              "static": true,
               "settings": {
-                "image_ratio": "adapt",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
+                "image_ratio": "portrait"
+              }
             },
-            "product_title_YXxMTj": {
-              "type": "product-title",
-              "name": "t:names.product_title",
+            "title": {
+              "type": "collection-title",
+              "name": "t:names.collection_title",
               "settings": {
-                "width": "100%",
-                "max_width": "normal",
+                "type_preset": "h5",
                 "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
+                "background": true,
+                "background_color": "#ffffff",
+                "text_color": "{{ settings.color_palette.foreground }}",
                 "padding-block-start": 4,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "price_JQzVV4": {
-              "type": "price",
-              "name": "t:names.product_price",
-              "settings": {
-                "show_sale_price_first": true,
-                "show_installments": false,
-                "show_tax_info": false,
-                "type_preset": "h6",
-                "width": "100%",
-                "alignment": "left",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "padding-block-end": 4,
+                "padding-inline-start": 8,
+                "padding-inline-end": 8
               },
               "blocks": {}
             }
           },
           "block_order": [
-            "product_card_gallery_677WP3",
-            "product_title_YXxMTj",
-            "price_JQzVV4"
+            "title"
+          ]
+        },
+        "card_3": {
+          "type": "collection-card",
+          "name": "t:names.collection_card",
+          "settings": {
+            "collection": "",
+            "image": "",
+            "placement": "on_image",
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "flex-end",
+            "collection_card_gap": 8,
+            "background_color": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0
+          },
+          "blocks": {
+            "collection-card-image": {
+              "type": "_collection-card-image",
+              "static": true,
+              "settings": {
+                "image_ratio": "portrait"
+              }
+            },
+            "title": {
+              "type": "collection-title",
+              "name": "t:names.collection_title",
+              "settings": {
+                "type_preset": "h5",
+                "alignment": "left",
+                "background": true,
+                "background_color": "#ffffff",
+                "text_color": "{{ settings.color_palette.foreground }}",
+                "padding-block-start": 4,
+                "padding-block-end": 4,
+                "padding-inline-start": 8,
+                "padding-inline-end": 8
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "title"
           ]
         }
       },
-      "name": "Featured collection",
+      "block_order": [
+        "card_1",
+        "card_2",
+        "card_3"
+      ],
+      "name": "t:names.collection_list",
       "settings": {
-        "collection": "all",
-        "layout_type": "grid",
-        "carousel_on_mobile": false,
-        "max_products": 8,
-        "columns": 4,
+        "heading": "Bäckeli moments",
+        "subheading": "Real smiles. Delicious Memories.",
+        "header_alignment": "center",
+        "columns": 3,
         "mobile_columns": "2",
-        "mobile_card_size": "60cqw",
-        "columns_gap": 8,
-        "rows_gap": 24,
-        "icons_style": "arrow",
-        "icons_shape": "none",
+        "grid_gap": 8,
         "section_width": "page-width",
-        "horizontal_alignment": "flex-start",
-        "gap": 28,
-        "background_color": "{{ settings.color_palette.background }}",
+        "background_color": "",
         "padding-block-start": 48,
         "padding-block-end": 48
       }
@@ -280,6 +266,6 @@
   },
   "order": [
     "hero_jVaWmY",
-    "product_list_fa6P9H"
+    "collection_list_NPc3aB"
   ]
 }

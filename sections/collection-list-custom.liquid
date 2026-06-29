@@ -1,0 +1,344 @@
+{% comment %}
+  Collection list (custom images)
+
+  A blocks-driven collection grid where each tile is an individual `collection-card`
+  block with its own Custom image picker + collection link, editable live in the theme
+  editor. Reuses Horizon's collection-card / resource-image pipeline; the custom image
+  overrides the collection's image (which falls back to the first product image, then a
+  placeholder).
+{% endcomment %}
+
+{% liquid
+  if section.settings.background_color != blank
+    render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
+  endif
+
+  assign has_header = false
+  if section.settings.heading != blank or section.settings.subheading != blank
+    assign has_header = true
+  endif
+%}
+
+<div
+  class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
+></div>
+
+<div
+  class="
+    section
+    section--{{ section.settings.section_width }}
+    {% if section.settings.background_color != blank %}color-custom-{{ section.id }}{% endif %}
+    collection-list-custom
+    spacing-style
+  "
+  style="{% render 'spacing-style', settings: section.settings %}"
+  data-testid="collection-list-custom"
+>
+  {% if has_header %}
+    <div class="collection-list-custom__header collection-list-custom__header--{{ section.settings.header_alignment }}">
+      {% if section.settings.heading != blank %}
+        <h2 class="collection-list-custom__heading">{{ section.settings.heading }}</h2>
+      {% endif %}
+      {% if section.settings.subheading != blank %}
+        <p class="collection-list-custom__subheading">{{ section.settings.subheading }}</p>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  <div
+    class="collection-list-custom__grid"
+    style="
+      --columns-desktop: {{ section.settings.columns }};
+      --columns-mobile: {{ section.settings.mobile_columns }};
+      --grid-gap: {{ section.settings.grid_gap }}px;
+    "
+  >
+    {%- content_for 'blocks' -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .collection-list-custom__header {
+    margin-block-end: var(--padding-lg, 24px);
+  }
+
+  .collection-list-custom__header--center {
+    text-align: center;
+  }
+
+  .collection-list-custom__heading {
+    margin: 0;
+    font-family: var(--font-heading--family);
+    font-weight: var(--font-heading--weight, 600);
+    letter-spacing: -0.01em;
+    font-size: clamp(2rem, 1.2rem + 3vw, 3.5rem);
+    line-height: 1.05;
+  }
+
+  .collection-list-custom__subheading {
+    margin: 0;
+    margin-block-start: 0.5rem;
+    font-family: var(--font-body--family);
+    font-size: clamp(1.05rem, 0.95rem + 0.6vw, 1.5rem);
+  }
+
+  .collection-list-custom__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--columns-desktop, 3), minmax(0, 1fr));
+    gap: var(--grid-gap, 12px);
+  }
+
+  @media screen and (max-width: 749px) {
+    .collection-list-custom__grid {
+      grid-template-columns: repeat(var(--columns-mobile, 2), minmax(0, 1fr));
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Collection image grid",
+  "tag": "section",
+  "class": "section-wrapper",
+  "blocks": [
+    {
+      "type": "collection-card"
+    },
+    {
+      "type": "@app"
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Shop by collection"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "select",
+      "id": "header_alignment",
+      "label": "Header alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Grid"
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Columns",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "select",
+      "id": "mobile_columns",
+      "label": "Mobile columns",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "label": "Gap",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Section layout"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Width",
+      "options": [
+        {
+          "value": "page-width",
+          "label": "Page"
+        },
+        {
+          "value": "full-width",
+          "label": "Full"
+        }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection image grid",
+      "category": "Collections",
+      "settings": {
+        "heading": "Shop by collection",
+        "columns": 3,
+        "mobile_columns": "2",
+        "grid_gap": 12,
+        "section_width": "page-width",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      },
+      "blocks": {
+        "card_1": {
+          "type": "collection-card",
+          "settings": {
+            "placement": "on_image",
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "flex-end"
+          },
+          "blocks": {
+            "collection-card-image": {
+              "type": "_collection-card-image",
+              "static": true,
+              "settings": {
+                "image_ratio": "portrait"
+              }
+            },
+            "title": {
+              "type": "collection-title",
+              "settings": {
+                "type_preset": "h5",
+                "background": true,
+                "background_color": "#ffffff",
+                "padding-block-start": 4,
+                "padding-block-end": 4,
+                "padding-inline-start": 8,
+                "padding-inline-end": 8
+              }
+            }
+          },
+          "block_order": ["title"]
+        },
+        "card_2": {
+          "type": "collection-card",
+          "settings": {
+            "placement": "on_image",
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "flex-end"
+          },
+          "blocks": {
+            "collection-card-image": {
+              "type": "_collection-card-image",
+              "static": true,
+              "settings": {
+                "image_ratio": "portrait"
+              }
+            },
+            "title": {
+              "type": "collection-title",
+              "settings": {
+                "type_preset": "h5",
+                "background": true,
+                "background_color": "#ffffff",
+                "padding-block-start": 4,
+                "padding-block-end": 4,
+                "padding-inline-start": 8,
+                "padding-inline-end": 8
+              }
+            }
+          },
+          "block_order": ["title"]
+        },
+        "card_3": {
+          "type": "collection-card",
+          "settings": {
+            "placement": "on_image",
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "flex-end"
+          },
+          "blocks": {
+            "collection-card-image": {
+              "type": "_collection-card-image",
+              "static": true,
+              "settings": {
+                "image_ratio": "portrait"
+              }
+            },
+            "title": {
+              "type": "collection-title",
+              "settings": {
+                "type_preset": "h5",
+                "background": true,
+                "background_color": "#ffffff",
+                "padding-block-start": 4,
+                "padding-block-end": 4,
+                "padding-inline-start": 8,
+                "padding-inline-end": 8
+              }
+            }
+          },
+          "block_order": ["title"]
+        }
+      },
+      "block_order": ["card_1", "card_2", "card_3"]
+    }
+  ]
+}
+{% endschema %}
