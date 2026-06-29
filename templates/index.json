@@ -102,170 +102,65 @@
         "padding-block-end": 72
       }
     },
-    "collection_list_NPc3aB": {
-      "type": "collection-list-custom",
+    "media_grid_VPaiPD": {
+      "type": "media-grid",
       "blocks": {
-        "card_1": {
-          "type": "collection-card",
-          "name": "t:names.collection_card",
+        "media_gCMCeN": {
+          "type": "media",
           "settings": {
-            "collection": "",
-            "image": "",
-            "placement": "on_image",
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "flex-end",
-            "collection_card_gap": 8,
-            "background_color": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_color": "",
-            "border_radius": 0
-          },
-          "blocks": {
-            "collection-card-image": {
-              "type": "_collection-card-image",
-              "static": true,
-              "settings": {
-                "image_ratio": "portrait"
-              }
-            },
-            "title": {
-              "type": "collection-title",
-              "name": "t:names.collection_title",
-              "settings": {
-                "type_preset": "h5",
-                "alignment": "left",
-                "background": true,
-                "background_color": "#ffffff",
-                "text_color": "{{ settings.color_palette.foreground }}",
-                "padding-block-start": 4,
-                "padding-block-end": 4,
-                "padding-inline-start": 8,
-                "padding-inline-end": 8
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "title"
-          ]
+            "image": "shopify://shop_images/single-lady.png",
+            "image_ratio": "wide-7-5",
+            "caption": "\"Warning: highly addictive. 🤤\"",
+            "caption_color": "",
+            "link": ""
+          }
         },
-        "card_2": {
-          "type": "collection-card",
-          "name": "t:names.collection_card",
+        "media_pcfaGh": {
+          "type": "media",
           "settings": {
-            "collection": "",
-            "image": "",
-            "placement": "on_image",
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "flex-end",
-            "collection_card_gap": 8,
-            "background_color": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_color": "",
-            "border_radius": 0
-          },
-          "blocks": {
-            "collection-card-image": {
-              "type": "_collection-card-image",
-              "static": true,
-              "settings": {
-                "image_ratio": "portrait"
-              }
-            },
-            "title": {
-              "type": "collection-title",
-              "name": "t:names.collection_title",
-              "settings": {
-                "type_preset": "h5",
-                "alignment": "left",
-                "background": true,
-                "background_color": "#ffffff",
-                "text_color": "{{ settings.color_palette.foreground }}",
-                "padding-block-start": 4,
-                "padding-block-end": 4,
-                "padding-inline-start": 8,
-                "padding-inline-end": 8
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "title"
-          ]
+            "image": "shopify://shop_images/black-couple.png",
+            "image_ratio": "wide-7-5",
+            "caption": "\"Our new weekend tradition.\"",
+            "caption_color": "",
+            "link": ""
+          }
         },
-        "card_3": {
-          "type": "collection-card",
-          "name": "t:names.collection_card",
+        "media_C4wcng": {
+          "type": "media",
           "settings": {
-            "collection": "",
-            "image": "",
-            "placement": "on_image",
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "flex-end",
-            "collection_card_gap": 8,
-            "background_color": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_color": "",
-            "border_radius": 0
-          },
-          "blocks": {
-            "collection-card-image": {
-              "type": "_collection-card-image",
-              "static": true,
-              "settings": {
-                "image_ratio": "portrait"
-              }
-            },
-            "title": {
-              "type": "collection-title",
-              "name": "t:names.collection_title",
-              "settings": {
-                "type_preset": "h5",
-                "alignment": "left",
-                "background": true,
-                "background_color": "#ffffff",
-                "text_color": "{{ settings.color_palette.foreground }}",
-                "padding-block-start": 4,
-                "padding-block-end": 4,
-                "padding-inline-start": 8,
-                "padding-inline-end": 8
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "title"
-          ]
+            "image": "shopify://shop_images/family.png",
+            "image_ratio": "wide-7-5",
+            "caption": "\"Nothing brings everyone to the table faster than fresh bread.\"",
+            "caption_color": "",
+            "link": ""
+          }
         }
       },
       "block_order": [
-        "card_1",
-        "card_2",
-        "card_3"
+        "media_gCMCeN",
+        "media_pcfaGh",
+        "media_C4wcng"
       ],
-      "name": "t:names.collection_list",
+      "name": "Media grid",
       "settings": {
         "heading": "Bäckeli moments",
-        "subheading": "Real smiles. Delicious Memories.",
+        "subheading": "Real smiles. Delicious memories.",
         "header_alignment": "center",
+        "heading_color": "",
+        "subheading_color": "#4D6074",
         "columns": 3,
-        "mobile_columns": "2",
-        "grid_gap": 8,
-        "section_width": "page-width",
+        "mobile_columns": "1",
+        "grid_gap": 16,
+        "section_width": "full-width",
+        "side_margin": 48,
         "background_color": "",
-        "padding-block-start": 48,
+        "padding-block-start": 70,
         "padding-block-end": 48
       }
     }
   },
   "order": [
     "hero_jVaWmY",
-    "collection_list_NPc3aB"
+    "media_grid_VPaiPD"
   ]
 }

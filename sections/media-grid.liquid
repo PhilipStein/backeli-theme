@@ -1,0 +1,517 @@
+{% comment %}
+  Media grid
+
+  A simple, standalone image grid: an optional heading/subheading followed by a
+  responsive grid of image tiles, each with its own image, aspect ratio, caption,
+  and optional link. No collection plumbing — every tile is a plain `media` block
+  edited directly in the theme editor.
+{% endcomment %}
+
+{% liquid
+  if section.settings.background_color != blank
+    render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
+  endif
+
+  assign has_header = false
+  if section.settings.heading != blank or section.settings.subheading != blank
+    assign has_header = true
+  endif
+%}
+
+<div
+  class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
+></div>
+
+<div
+  class="
+    section
+    section--{{ section.settings.section_width }}
+    {% if section.settings.background_color != blank %}color-custom-{{ section.id }}{% endif %}
+    media-grid
+    spacing-style
+  "
+  style="
+    {% render 'spacing-style', settings: section.settings %}
+    --side-margin-desktop: {{ section.settings.side_margin }}px;
+    --heading-size: {{ section.settings.heading_size }}px;
+    --subheading-size: {{ section.settings.subheading_size }}px;
+  "
+  data-testid="media-grid"
+>
+  {% if has_header %}
+    <div class="media-grid__header media-grid__header--{{ section.settings.header_alignment }}">
+      {% if section.settings.heading != blank %}
+        <h2
+          class="media-grid__heading"
+          {% if section.settings.heading_color != blank %}style="color: {{ section.settings.heading_color }};"{% endif %}
+        >
+          {{ section.settings.heading }}
+        </h2>
+      {% endif %}
+      {% if section.settings.subheading != blank %}
+        <p
+          class="media-grid__subheading"
+          {% if section.settings.subheading_color != blank %}style="color: {{ section.settings.subheading_color }};"{% endif %}
+        >
+          {{ section.settings.subheading }}
+        </p>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  <div
+    class="media-grid__grid"
+    style="
+      --columns-desktop: {{ section.settings.columns }};
+      --columns-mobile: {{ section.settings.mobile_columns }};
+      --grid-gap: {{ section.settings.grid_gap }}px;
+    "
+  >
+    {% assign calc_width = 100 | divided_by: section.settings.columns %}
+    {% assign img_sizes = '(min-width: 750px) ' | append: calc_width | append: 'vw, 100vw' %}
+
+    {% for block in section.blocks %}
+      {% liquid
+        # Map the friendly ratio value to a CSS aspect-ratio
+        assign ratio = '4 / 5'
+        case block.settings.image_ratio
+          when 'adapt'
+            assign ratio = block.settings.image.aspect_ratio | default: 1
+          when 'tall-9-16'
+            assign ratio = '9 / 16'
+          when 'tall-5-7'
+            assign ratio = '5 / 7'
+          when 'portrait'
+            assign ratio = '4 / 5'
+          when 'square'
+            assign ratio = '1 / 1'
+          when 'wide-7-5'
+            assign ratio = '7 / 5'
+          when 'landscape'
+            assign ratio = '16 / 9'
+        endcase
+        if ratio == 0 or ratio == null
+          assign ratio = 1
+        endif
+
+        # Rotate through the placeholder set when no image is chosen yet
+        assign placeholder_variant = forloop.index0 | modulo: 4 | plus: 1
+        assign placeholder_name = 'collection-apparel-' | append: placeholder_variant
+      %}
+
+      <div class="media-grid__item" {{ block.shopify_attributes }}>
+        {% capture media %}
+          <div class="media-grid__media" style="--ratio: {{ ratio }};">
+            {% if block.settings.image != blank %}
+              {{
+                block.settings.image
+                | image_url: width: 1800
+                | image_tag:
+                  widths: '300, 500, 700, 900, 1100, 1400, 1800',
+                  sizes: img_sizes,
+                  class: 'media-grid__image',
+                  loading: 'lazy'
+              }}
+            {% else %}
+              <div class="media-grid__image media-grid__image--placeholder">
+                {{ placeholder_name | placeholder_svg_tag }}
+              </div>
+            {% endif %}
+          </div>
+        {% endcapture %}
+
+        {% if block.settings.link != blank %}
+          <a href="{{ block.settings.link }}" class="media-grid__link">{{ media }}</a>
+        {% else %}
+          {{ media }}
+        {% endif %}
+
+        {% if block.settings.caption != blank %}
+          <div
+            class="media-grid__caption"
+            {% if block.settings.caption_color != blank %}style="color: {{ block.settings.caption_color }};"{% endif %}
+          >
+            {{ block.settings.caption }}
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% stylesheet %}
+  .media-grid__header {
+    margin-block-end: var(--padding-lg, 24px);
+  }
+
+  .media-grid__header--center {
+    text-align: center;
+  }
+
+  .media-grid__heading {
+    margin: 0;
+    font-family: var(--font-heading--family);
+    font-weight: var(--font-heading--weight, 600);
+    letter-spacing: -0.01em;
+    font-size: var(--heading-size, 48px);
+    line-height: 1.05;
+  }
+
+  .media-grid__subheading {
+    margin: 0;
+    margin-block-start: 0.5rem;
+    font-family: var(--font-body--family);
+    font-size: var(--subheading-size, 20px);
+  }
+
+  @media screen and (max-width: 749px) {
+    .media-grid__heading {
+      font-size: calc(var(--heading-size, 48px) * 0.7);
+    }
+
+    .media-grid__subheading {
+      font-size: calc(var(--subheading-size, 20px) * 0.85);
+    }
+  }
+
+  .media-grid__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--columns-desktop, 3), minmax(0, 1fr));
+    gap: var(--grid-gap, 16px);
+  }
+
+  .media-grid__item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .media-grid__link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .media-grid__media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: var(--ratio, 4 / 5);
+    overflow: hidden;
+  }
+
+  .media-grid__image,
+  .media-grid__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .media-grid__image--placeholder svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .media-grid__caption {
+    margin-block-start: 0.85rem;
+    text-align: center;
+    font-family: var(--font-body--family);
+    font-size: clamp(1rem, 0.95rem + 0.3vw, 1.2rem);
+    line-height: 1.35;
+  }
+
+  @media screen and (min-width: 750px) {
+    .media-grid {
+      padding-inline: var(--side-margin-desktop, 0px);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .media-grid__grid {
+      grid-template-columns: repeat(var(--columns-mobile, 1), minmax(0, 1fr));
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Media grid",
+  "tag": "section",
+  "class": "section-wrapper",
+  "blocks": [
+    {
+      "type": "media",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "select",
+          "id": "image_ratio",
+          "label": "Aspect ratio",
+          "options": [
+            {
+              "value": "adapt",
+              "label": "Auto (image's own ratio)"
+            },
+            {
+              "value": "tall-9-16",
+              "label": "Tall (9:16)"
+            },
+            {
+              "value": "tall-5-7",
+              "label": "Portrait (5:7)"
+            },
+            {
+              "value": "portrait",
+              "label": "Portrait (4:5)"
+            },
+            {
+              "value": "square",
+              "label": "Square (1:1)"
+            },
+            {
+              "value": "wide-7-5",
+              "label": "Landscape (7:5)"
+            },
+            {
+              "value": "landscape",
+              "label": "Landscape (16:9)"
+            }
+          ],
+          "default": "landscape"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "caption",
+          "label": "Caption"
+        },
+        {
+          "type": "color",
+          "id": "caption_color",
+          "label": "Caption color",
+          "info": "Leave blank to inherit the section text color."
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link",
+          "info": "Optional. Makes the image clickable."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Bäckeli moments"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Real smiles. Delicious memories."
+    },
+    {
+      "type": "select",
+      "id": "header_alignment",
+      "label": "Header alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 20,
+      "max": 96,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "subheading_size",
+      "label": "Subheading size",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "info": "Leave blank to inherit the section text color."
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading color",
+      "info": "Leave blank to inherit the section text color."
+    },
+    {
+      "type": "header",
+      "content": "Grid"
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Columns",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "select",
+      "id": "mobile_columns",
+      "label": "Mobile columns",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "label": "Gap",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Section layout"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Width",
+      "options": [
+        {
+          "value": "page-width",
+          "label": "Page"
+        },
+        {
+          "value": "full-width",
+          "label": "Full"
+        }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "range",
+      "id": "side_margin",
+      "label": "Side margin (desktop)",
+      "info": "Adds space to the left and right of the section on desktop.",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "Media grid",
+      "category": "Image",
+      "settings": {
+        "heading": "Bäckeli moments",
+        "subheading": "Real smiles. Delicious memories.",
+        "header_alignment": "center",
+        "columns": 3,
+        "mobile_columns": "1",
+        "grid_gap": 16,
+        "section_width": "page-width",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      },
+      "blocks": [
+        {
+          "type": "media",
+          "settings": {
+            "image_ratio": "landscape",
+            "caption": "\"Warning: highly addictive. 🤤\""
+          }
+        },
+        {
+          "type": "media",
+          "settings": {
+            "image_ratio": "landscape",
+            "caption": "\"Our new weekend tradition.\""
+          }
+        },
+        {
+          "type": "media",
+          "settings": {
+            "image_ratio": "landscape",
+            "caption": "\"Nothing brings everyone to the table faster than fresh bread.\""
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

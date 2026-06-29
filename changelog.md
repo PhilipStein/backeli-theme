@@ -10,6 +10,35 @@ Added **Heading color** and **Subheading color** pickers to the collection grid 
 | --- | --- |
 | [sections/collection-list-custom.liquid](sections/collection-list-custom.liquid) | Added `heading_color` / `subheading_color` settings, applied as inline `color` only when set. |
 
+## 2026-06-29 — New section: Come visit us (with map)
+
+Added a two-column **Come visit us** contact section — heading, subheading, address/phone/email rows (with icons), Get directions + Call buttons (brand styled), and Instagram/Facebook links on one side; an embedded Google map on the other. The map needs **no API key**: it's generated from the address via Google's `output=embed` endpoint, with optional zoom, height, left/right placement, and a custom-embed-URL override. Phone/email auto-link (`tel:` / `mailto:`); the Call button falls back to a `tel:` link from the phone number.
+
+| File | Change |
+| --- | --- |
+| [sections/come-visit-us.liquid](sections/come-visit-us.liquid) | **New section.** Adds from the editor's **Contact** category; reuses the theme's `.button` / `.button-secondary` styles and `instagram`/`facebook` icons, inlines pin/phone/mail icons. Includes heading/subheading sizes + colors, side margin, background, and padding. |
+
+## 2026-06-29 — Text block: mobile font size
+
+Added a **Mobile size** option to the **Text** block (used for the hero heading and subheading, among others). When set, it overrides the font size on phones (≤749px) so large hero headings like “a Taste of Germany” can be sized down to fit on one line; left on “Same as desktop” it changes nothing. Only shows when the block uses the **Custom** type preset.
+
+| File | Change |
+| --- | --- |
+| [blocks/text.liquid](blocks/text.liquid) | New `font_size_mobile` select (10–72px, default “Same as desktop”). |
+| [snippets/text.liquid](snippets/text.liquid) | Emits `--font-size-mobile` + a `custom-font-size-mobile` class, with a ≤749px rule (specificity-bumped to beat base.css) that applies it. |
+
+## 2026-06-29 — New section: Media grid
+
+Added a standalone **Media grid** section — a heading/subheading plus a responsive grid of plain image tiles, each with its own image, aspect ratio, caption, and optional link. Unlike the collection grid, tiles are simple `media` blocks edited directly in the theme editor (no collection / private-static-block plumbing), so images and captions behave predictably. Carries over the same niceties: header + caption color pickers, 7 aspect-ratio options, desktop side margin, columns/gap/width/background/padding.
+
+| File | Change |
+| --- | --- |
+| [sections/media-grid.liquid](sections/media-grid.liquid) | **New section.** Adds from the editor's **Image** category as “Media grid”; ships a 3-tile preset matching the "Bäckeli moments" layout. |
+
+### Update — heading & subheading font size
+
+Added **Heading size** (20–96px) and **Subheading size** (12–40px) range settings to the Media grid header. Sizes apply on desktop and scale down on mobile (heading ×0.7, subheading ×0.85) so large values don't overflow on phones.
+
 ## 2026-06-29 — Collection grid: editable aspect ratio per card
 
 The **Aspect ratio** control now lives on the **Collection card** block itself (next to the Custom image picker), so it's editable in the theme editor. Previously it sat on the private, static `_collection-card-image` sub-block, whose settings aren't reachable in the editor — so the ratio couldn't actually be changed. The parent's choice is forwarded down to the image and wins over the sub-block's value.

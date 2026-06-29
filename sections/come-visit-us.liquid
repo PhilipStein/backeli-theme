@@ -1,0 +1,595 @@
+{% comment %}
+  Come visit us
+
+  A two-column "visit us" section: contact details (address / phone / email),
+  two call-to-action buttons, and social links on one side; an embedded Google
+  map on the other. The map needs no API key — it's built from the address via
+  Google's `output=embed` endpoint, or you can paste a custom embed URL.
+{% endcomment %}
+
+{% liquid
+  if section.settings.background_color != blank
+    render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
+  endif
+
+  # Build the map embed source: explicit embed URL wins, otherwise from the address.
+  assign map_src = ''
+  if section.settings.map_embed_url != blank
+    assign map_src = section.settings.map_embed_url
+  elsif section.settings.map_address != blank
+    assign map_query = section.settings.map_address | url_encode
+    assign map_src = 'https://maps.google.com/maps?q=' | append: map_query | append: '&z=' | append: section.settings.map_zoom | append: '&output=embed'
+  endif
+
+  # Fall back the "call" button to a tel: link built from the phone number.
+  assign call_link = section.settings.call_link
+  if call_link == blank and section.settings.phone != blank
+    assign call_link = 'tel:' | append: section.settings.phone | replace: ' ', '' | strip
+  endif
+%}
+
+<div
+  class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
+></div>
+
+<div
+  class="
+    section
+    section--{{ section.settings.section_width }}
+    {% if section.settings.background_color != blank %}color-custom-{{ section.id }}{% endif %}
+    visit-us
+    visit-us--media-{{ section.settings.media_position }}
+    spacing-style
+  "
+  style="
+    {% render 'spacing-style', settings: section.settings %}
+    --side-margin-desktop: {{ section.settings.side_margin }}px;
+    --column-gap: {{ section.settings.column_gap }}px;
+    --map-height: {{ section.settings.map_height }}px;
+    --heading-size: {{ section.settings.heading_size }}px;
+    --subheading-size: {{ section.settings.subheading_size }}px;
+  "
+  data-testid="come-visit-us"
+>
+  <div class="visit-us__content">
+    {% if section.settings.heading != blank %}
+      <h2
+        class="visit-us__heading"
+        {% if section.settings.heading_color != blank %}style="color: {{ section.settings.heading_color }};"{% endif %}
+      >
+        {{ section.settings.heading }}
+      </h2>
+    {% endif %}
+
+    {% if section.settings.subheading != blank %}
+      <div
+        class="visit-us__subheading"
+        {% if section.settings.subheading_color != blank %}style="color: {{ section.settings.subheading_color }};"{% endif %}
+      >
+        {{ section.settings.subheading }}
+      </div>
+    {% endif %}
+
+    {% if section.settings.address != blank or section.settings.phone != blank or section.settings.email != blank %}
+      <ul class="visit-us__details" role="list">
+        {% if section.settings.address != blank %}
+          <li class="visit-us__detail">
+            <span class="visit-us__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+            </span>
+            {% if section.settings.directions_link != blank %}
+              <a href="{{ section.settings.directions_link }}" class="visit-us__detail-link">{{ section.settings.address }}</a>
+            {% else %}
+              <span>{{ section.settings.address }}</span>
+            {% endif %}
+          </li>
+        {% endif %}
+
+        {% if section.settings.phone != blank %}
+          <li class="visit-us__detail">
+            <span class="visit-us__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" />
+              </svg>
+            </span>
+            <a href="tel:{{ section.settings.phone | replace: ' ', '' | strip }}" class="visit-us__detail-link">{{ section.settings.phone }}</a>
+          </li>
+        {% endif %}
+
+        {% if section.settings.email != blank %}
+          <li class="visit-us__detail">
+            <span class="visit-us__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="4" width="20" height="16" rx="2" />
+                <path d="m22 7-10 6L2 7" />
+              </svg>
+            </span>
+            <a href="mailto:{{ section.settings.email | strip }}" class="visit-us__detail-link">{{ section.settings.email }}</a>
+          </li>
+        {% endif %}
+      </ul>
+    {% endif %}
+
+    {% if section.settings.directions_label != blank or section.settings.call_label != blank %}
+      <div class="visit-us__buttons">
+        {% if section.settings.directions_label != blank %}
+          <a
+            class="button visit-us__button"
+            {% if section.settings.directions_link != blank %}
+              href="{{ section.settings.directions_link }}" target="_blank" rel="noopener noreferrer"
+            {% else %}
+              role="link" aria-disabled="true"
+            {% endif %}
+          >
+            {{ section.settings.directions_label }}
+          </a>
+        {% endif %}
+        {% if section.settings.call_label != blank %}
+          <a
+            class="button-secondary visit-us__button"
+            {% if call_link != blank %}href="{{ call_link }}"{% else %}role="link" aria-disabled="true"{% endif %}
+          >
+            {{ section.settings.call_label }}
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% if section.settings.instagram_url != blank or section.settings.facebook_url != blank %}
+      <div class="visit-us__social">
+        {% if section.settings.social_label != blank %}
+          <span class="visit-us__social-label">{{ section.settings.social_label }}</span>
+        {% endif %}
+        {% if section.settings.instagram_url != blank %}
+          <a href="{{ section.settings.instagram_url }}" class="visit-us__social-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">{% render 'icon', icon: 'instagram' %}</svg>
+          </a>
+        {% endif %}
+        {% if section.settings.facebook_url != blank %}
+          <a href="{{ section.settings.facebook_url }}" class="visit-us__social-link" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+            <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">{% render 'icon', icon: 'facebook' %}</svg>
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="visit-us__map">
+    {% if map_src != blank %}
+      <iframe
+        src="{{ map_src }}"
+        class="visit-us__map-frame"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen
+        title="{{ section.settings.map_address | default: 'Map' | escape }}"
+      ></iframe>
+    {% else %}
+      <div class="visit-us__map-placeholder">
+        {{ 'image' | placeholder_svg_tag: 'visit-us__map-placeholder-svg' }}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% stylesheet %}
+  .visit-us {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--column-gap, 64px);
+    align-items: center;
+  }
+
+  .visit-us--media-left .visit-us__content {
+    order: 2;
+  }
+
+  .visit-us--media-left .visit-us__map {
+    order: 1;
+  }
+
+  .visit-us__heading {
+    margin: 0;
+    font-family: var(--font-heading--family);
+    font-weight: var(--font-heading--weight, 600);
+    letter-spacing: -0.01em;
+    font-size: var(--heading-size, 56px);
+    line-height: 1.02;
+  }
+
+  .visit-us__subheading {
+    margin-block-start: 1rem;
+    font-family: var(--font-body--family);
+    font-size: var(--subheading-size, 20px);
+    line-height: 1.5;
+    max-width: 34ch;
+  }
+
+  .visit-us__details {
+    list-style: none;
+    margin: 2rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .visit-us__detail {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    font-family: var(--font-body--family);
+    font-size: 1.05rem;
+  }
+
+  .visit-us__icon {
+    display: inline-flex;
+    flex: 0 0 auto;
+  }
+
+  .visit-us__icon svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .visit-us__detail-link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .visit-us__detail-link:hover {
+    text-decoration: underline;
+  }
+
+  .visit-us__buttons {
+    margin-block-start: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .visit-us__social {
+    margin-block-start: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .visit-us__social-label {
+    font-family: var(--font-heading--family);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.85rem;
+  }
+
+  .visit-us__social-link {
+    display: inline-flex;
+    color: inherit;
+  }
+
+  .visit-us__social-link svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .visit-us__social-link:hover {
+    opacity: 0.7;
+  }
+
+  .visit-us__map {
+    width: 100%;
+    height: var(--map-height, 420px);
+    overflow: hidden;
+  }
+
+  .visit-us__map-frame {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+
+  .visit-us__map-placeholder {
+    width: 100%;
+    height: 100%;
+    background: var(--color-background-subtle, #eee);
+  }
+
+  .visit-us__map-placeholder svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media screen and (min-width: 750px) {
+    .visit-us {
+      padding-inline: var(--side-margin-desktop, 0px);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .visit-us {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .visit-us--media-left .visit-us__content,
+    .visit-us--media-left .visit-us__map {
+      order: 0;
+    }
+
+    .visit-us__heading {
+      font-size: calc(var(--heading-size, 56px) * 0.7);
+    }
+
+    .visit-us__subheading {
+      font-size: calc(var(--subheading-size, 20px) * 0.9);
+    }
+
+    .visit-us__map {
+      height: calc(var(--map-height, 420px) * 0.8);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Come visit us",
+  "tag": "section",
+  "class": "section-wrapper",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "come visit us"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "<p>Pop in for warm Brötchen, rustic loaves, and pastries straight from the oven.</p>"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 24,
+      "max": 96,
+      "step": 1,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "subheading_size",
+      "label": "Subheading size",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "info": "Leave blank to inherit the section text color."
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading color",
+      "info": "Leave blank to inherit the section text color."
+    },
+    {
+      "type": "header",
+      "content": "Contact details"
+    },
+    {
+      "type": "text",
+      "id": "address",
+      "label": "Address",
+      "default": "156 NE 28th St, Miami, FL 33137"
+    },
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "Phone",
+      "default": "(305) 555-0142"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email",
+      "default": "hello@backeli.com"
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "text",
+      "id": "directions_label",
+      "label": "Directions button label",
+      "default": "Get directions"
+    },
+    {
+      "type": "url",
+      "id": "directions_link",
+      "label": "Directions link",
+      "info": "Tip: paste a Google Maps link to your location. Also used for the address link."
+    },
+    {
+      "type": "text",
+      "id": "call_label",
+      "label": "Call button label",
+      "default": "Call the bakery"
+    },
+    {
+      "type": "url",
+      "id": "call_link",
+      "label": "Call link",
+      "info": "Optional. Leave blank to auto-build a tel: link from the phone number above."
+    },
+    {
+      "type": "header",
+      "content": "Social"
+    },
+    {
+      "type": "text",
+      "id": "social_label",
+      "label": "Label",
+      "default": "Follow along"
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Instagram URL"
+    },
+    {
+      "type": "url",
+      "id": "facebook_url",
+      "label": "Facebook URL"
+    },
+    {
+      "type": "header",
+      "content": "Map"
+    },
+    {
+      "type": "text",
+      "id": "map_address",
+      "label": "Map address",
+      "info": "Used to render the embedded Google map (no API key needed).",
+      "default": "156 NE 28th St, Miami, FL 33137"
+    },
+    {
+      "type": "range",
+      "id": "map_zoom",
+      "label": "Map zoom",
+      "min": 1,
+      "max": 20,
+      "step": 1,
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "map_height",
+      "label": "Map height",
+      "min": 240,
+      "max": 720,
+      "step": 10,
+      "unit": "px",
+      "default": 420
+    },
+    {
+      "type": "url",
+      "id": "map_embed_url",
+      "label": "Custom map embed URL",
+      "info": "Optional. Overrides the address — paste the src URL from Google Maps → Share → Embed a map."
+    },
+    {
+      "type": "header",
+      "content": "Section layout"
+    },
+    {
+      "type": "select",
+      "id": "media_position",
+      "label": "Map position (desktop)",
+      "options": [
+        {
+          "value": "right",
+          "label": "Right"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "label": "Column gap",
+      "min": 16,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Width",
+      "options": [
+        {
+          "value": "page-width",
+          "label": "Page"
+        },
+        {
+          "value": "full-width",
+          "label": "Full"
+        }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "range",
+      "id": "side_margin",
+      "label": "Side margin (desktop)",
+      "info": "Adds space to the left and right of the section on desktop.",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top",
+      "min": 0,
+      "max": 160,
+      "step": 1,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom",
+      "min": 0,
+      "max": 160,
+      "step": 1,
+      "unit": "px",
+      "default": 72
+    }
+  ],
+  "presets": [
+    {
+      "name": "Come visit us",
+      "category": "Contact"
+    }
+  ]
+}
+{% endschema %}
