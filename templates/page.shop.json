@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero_shop": {
@@ -40,7 +49,10 @@
           "blocks": {}
         }
       },
-      "block_order": ["heading", "sub"],
+      "block_order": [
+        "heading",
+        "sub"
+      ],
       "name": "t:names.hero",
       "settings": {
         "media_type_1": "image",
@@ -68,31 +80,47 @@
       "blocks": {
         "c_all": {
           "type": "category",
-          "settings": { "label": "All", "link": "shopify://collections/all" },
-          "blocks": {}
+          "settings": {
+            "label": "All",
+            "link": "shopify://collections/all"
+          }
         },
         "c_breads": {
           "type": "category",
-          "settings": { "label": "Signature Breads", "link": "" },
-          "blocks": {}
+          "settings": {
+            "label": "Signature Breads",
+            "link": ""
+          }
         },
         "c_rolls": {
           "type": "category",
-          "settings": { "label": "Morning Rolls", "link": "" },
-          "blocks": {}
+          "settings": {
+            "label": "Morning Rolls",
+            "link": ""
+          }
         },
         "c_pastries": {
           "type": "category",
-          "settings": { "label": "Sweet & Savory Pastries", "link": "" },
-          "blocks": {}
+          "settings": {
+            "label": "Sweet & Savory Pastries",
+            "link": ""
+          }
         },
         "c_cakes": {
           "type": "category",
-          "settings": { "label": "Traditional Cakes", "link": "" },
-          "blocks": {}
+          "settings": {
+            "label": "Traditional Cakes",
+            "link": ""
+          }
         }
       },
-      "block_order": ["c_all", "c_breads", "c_rolls", "c_pastries", "c_cakes"],
+      "block_order": [
+        "c_all",
+        "c_breads",
+        "c_rolls",
+        "c_pastries",
+        "c_cakes"
+      ],
       "name": "Category nav",
       "settings": {
         "sticky": true,
@@ -109,8 +137,8 @@
           "type": "text",
           "settings": {
             "text": "<h2>fresh from the oven</h2>",
-            "type_preset": "h2",
             "alignment": "center",
+            "type_preset": "h2",
             "font": "var(--font-heading--family)"
           },
           "blocks": {}
@@ -119,9 +147,9 @@
           "type": "text",
           "settings": {
             "text": "<p>Our full menu is being plated — signature breads, morning rolls, sweet &amp; savory pastries and traditional cakes arrive soon. Browse the catalog in the meantime.</p>",
-            "type_preset": "rte",
+            "max_width": "narrow",
             "alignment": "center",
-            "max_width": "narrow"
+            "type_preset": "rte"
           },
           "blocks": {}
         },
@@ -135,7 +163,11 @@
           "blocks": {}
         }
       },
-      "block_order": ["ph_heading", "ph_text", "ph_btn"],
+      "block_order": [
+        "ph_heading",
+        "ph_text",
+        "ph_btn"
+      ],
       "name": "t:names.section",
       "settings": {
         "content_direction": "column",
@@ -150,5 +182,9 @@
       }
     }
   },
-  "order": ["hero_shop", "category_nav", "menu_placeholder"]
+  "order": [
+    "hero_shop",
+    "category_nav",
+    "menu_placeholder"
+  ]
 }
