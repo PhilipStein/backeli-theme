@@ -64,33 +64,53 @@
       }
     },
     "story_founders": {
-      "type": "media-with-content",
+      "type": "section",
       "blocks": {
-        "media": {
-          "type": "_media-without-appearance",
-          "static": true,
+        "media_col": {
+          "type": "group",
           "settings": {
-            "media_type": "image",
-            "image": "shopify://shop_images/our-story-breakfast.png",
-            "image_position": "cover"
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment_flex_direction_column": "center",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 0,
+            "width": "fill",
+            "height": "fill"
           },
-          "blocks": {}
+          "blocks": {
+            "img": {
+              "type": "image",
+              "settings": {
+                "image": "shopify://shop_images/our-story-breakfast.png",
+                "image_ratio": "portrait",
+                "width": "fill",
+                "width_mobile": "fill"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": ["img"]
         },
-        "content": {
-          "type": "_content-without-appearance",
-          "static": true,
+        "txt_col": {
+          "type": "group",
           "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
             "horizontal_alignment_flex_direction_column": "flex-start",
             "vertical_alignment_flex_direction_column": "center",
-            "gap": 20
+            "gap": 20,
+            "width": "fill",
+            "height": "fill"
           },
           "blocks": {
             "heading": {
               "type": "text",
               "settings": {
                 "text": "<h2>from childhood friends to childhood favorites</h2>",
-                "type_preset": "h2",
+                "width": "100%",
+                "max_width": "normal",
                 "alignment": "left",
+                "type_preset": "h2",
                 "font": "var(--font-heading--family)"
               },
               "blocks": {}
@@ -99,9 +119,11 @@
               "type": "text",
               "settings": {
                 "text": "<p>Born and raised in Germany, the two founders of Bäckeli have been friends since the age of ten. They grew up sharing a love for leisurely breakfasts filled with warm Brötchen, rustic breads, and fresh pastries from the local bakery.</p><p>Life took them in different directions — one built a career in Germany, the other became an entrepreneur in the United States. Yet no matter the distance, one topic always brought them back together: the bread they grew up with and the memories that came with it.</p><p>and so, bäckeli was born.</p><p>Today, their mission is simple: to bring the warmth, tradition, and unmistakable joy of authentic German baking to a new generation — one delicious bite at a time.</p>",
-                "type_preset": "rte",
+                "width": "100%",
+                "max_width": "normal",
                 "alignment": "left",
-                "max_width": "narrow"
+                "type_preset": "rte",
+                "font": "var(--font-body--family)"
               },
               "blocks": {}
             }
@@ -109,16 +131,32 @@
           "block_order": ["heading", "body"]
         }
       },
-      "name": "t:names.media_with_text",
+      "block_order": ["media_col", "txt_col"],
+      "name": "t:names.section",
       "settings": {
-        "media_position": "left",
-        "media_width": "medium",
-        "media_height": "60svh",
+        "content_direction": "row",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "center",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 64,
         "section_width": "page-width",
-        "extend_media": true,
+        "background_media": "none",
         "background_color": "#FCFCFC",
-        "padding-block-start": 0,
-        "padding-block-end": 0
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 80,
+        "padding-block-end": 80
       }
     },
     "pullquote_story": {
@@ -158,33 +196,28 @@
       }
     },
     "story_fritz": {
-      "type": "media-with-content",
+      "type": "section",
       "blocks": {
-        "media": {
-          "type": "_media-without-appearance",
-          "static": true,
+        "txt_col": {
+          "type": "group",
           "settings": {
-            "media_type": "image",
-            "image": "shopify://shop_images/fritz-full.png",
-            "image_position": "cover"
-          },
-          "blocks": {}
-        },
-        "content": {
-          "type": "_content-without-appearance",
-          "static": true,
-          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
             "horizontal_alignment_flex_direction_column": "flex-start",
             "vertical_alignment_flex_direction_column": "center",
-            "gap": 20
+            "gap": 20,
+            "width": "fill",
+            "height": "fill"
           },
           "blocks": {
             "heading": {
               "type": "text",
               "settings": {
                 "text": "<h2>meet fritz</h2>",
-                "type_preset": "h2",
+                "width": "100%",
+                "max_width": "normal",
                 "alignment": "left",
+                "type_preset": "h2",
                 "font": "var(--font-heading--family)"
               },
               "blocks": {}
@@ -193,26 +226,71 @@
               "type": "text",
               "settings": {
                 "text": "<p>Every bakery needs someone who knows where the fresh bread is.</p><p>Fritz is Bäckeli's lovable mascot and chief aroma enthusiast. He represents the joy, curiosity, and simple pleasures that inspired Bäckeli from the very beginning. Whenever something comes out of the oven, you can be sure Fritz is already nearby.</p>",
-                "type_preset": "rte",
+                "width": "100%",
+                "max_width": "normal",
                 "alignment": "left",
-                "max_width": "narrow"
+                "type_preset": "rte",
+                "font": "var(--font-body--family)"
               },
               "blocks": {}
             }
           },
           "block_order": ["heading", "body"]
+        },
+        "media_col": {
+          "type": "group",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment_flex_direction_column": "center",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 0,
+            "width": "fill",
+            "height": "fill"
+          },
+          "blocks": {
+            "img": {
+              "type": "image",
+              "settings": {
+                "image": "shopify://shop_images/fritz-full.png",
+                "image_ratio": "adapt",
+                "width": "custom",
+                "custom_width": 60,
+                "width_mobile": "custom",
+                "custom_width_mobile": 60
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": ["img"]
         }
       },
-      "name": "t:names.media_with_text",
+      "block_order": ["txt_col", "media_col"],
+      "name": "t:names.section",
       "settings": {
-        "media_position": "right",
-        "media_width": "medium",
-        "media_height": "60svh",
+        "content_direction": "row",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "center",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 64,
         "section_width": "page-width",
-        "extend_media": true,
-        "background_color": "",
-        "padding-block-start": 0,
-        "padding-block-end": 0
+        "background_media": "none",
+        "background_color": "#FCFCFC",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 80,
+        "padding-block-end": 80
       }
     },
     "closing_cta": {

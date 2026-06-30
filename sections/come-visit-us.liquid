@@ -181,6 +181,10 @@
     grid-template-columns: 1fr 1fr;
     gap: var(--column-gap, 64px);
     align-items: center;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: max(clamp(1rem, 4vw, 2rem), var(--side-margin-desktop, 0px));
+    box-sizing: border-box;
   }
 
   /* Explicitly place the two columns. Horizon's base `.section > *` rule otherwise
@@ -313,12 +317,6 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-  }
-
-  @media screen and (min-width: 750px) {
-    .visit-us {
-      padding-inline: var(--side-margin-desktop, 0px);
-    }
   }
 
   @media screen and (max-width: 749px) {

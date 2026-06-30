@@ -73,33 +73,53 @@
       }
     },
     "crafted": {
-      "type": "media-with-content",
+      "type": "section",
       "blocks": {
-        "media": {
-          "type": "_media-without-appearance",
-          "static": true,
+        "media_col": {
+          "type": "group",
           "settings": {
-            "media_type": "image",
-            "image": "shopify://shop_images/crafted-germany-bread.png",
-            "image_position": "cover"
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment_flex_direction_column": "center",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 0,
+            "width": "fill",
+            "height": "fill"
           },
-          "blocks": {}
+          "blocks": {
+            "img": {
+              "type": "image",
+              "settings": {
+                "image": "shopify://shop_images/crafted-germany-bread.png",
+                "image_ratio": "portrait",
+                "width": "fill",
+                "width_mobile": "fill"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": ["img"]
         },
-        "content": {
-          "type": "_content-without-appearance",
-          "static": true,
+        "txt_col": {
+          "type": "group",
           "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
             "horizontal_alignment_flex_direction_column": "flex-start",
             "vertical_alignment_flex_direction_column": "center",
-            "gap": 20
+            "gap": 20,
+            "width": "fill",
+            "height": "fill"
           },
           "blocks": {
             "heading": {
               "type": "text",
               "settings": {
                 "text": "<h2>crafted in germany. enjoyed fresh.</h2>",
-                "type_preset": "h2",
+                "width": "100%",
+                "max_width": "normal",
                 "alignment": "left",
+                "type_preset": "h2",
                 "font": "var(--font-heading--family)"
               },
               "blocks": {}
@@ -108,9 +128,11 @@
               "type": "text",
               "settings": {
                 "text": "<p>At Bäckeli, we work with specialized German bakeries that have perfected their craft over generations.</p><p>Using traditional recipes and professional baking methods, our breads, rolls, and pastries are crafted in Germany and enjoyed fresh by guests and customers around the world.</p><p>The result is the unmistakable aroma, crisp crust, and authentic taste that have made German baking famous worldwide.</p>",
-                "type_preset": "rte",
+                "width": "100%",
+                "max_width": "normal",
                 "alignment": "left",
-                "max_width": "narrow"
+                "type_preset": "rte",
+                "font": "var(--font-body--family)"
               },
               "blocks": {}
             }
@@ -118,16 +140,32 @@
           "block_order": ["heading", "body"]
         }
       },
-      "name": "t:names.media_with_text",
+      "block_order": ["media_col", "txt_col"],
+      "name": "t:names.section",
       "settings": {
-        "media_position": "left",
-        "media_width": "medium",
-        "media_height": "60svh",
+        "content_direction": "row",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "center",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 64,
         "section_width": "page-width",
-        "extend_media": true,
+        "background_media": "none",
         "background_color": "#FCFCFC",
-        "padding-block-start": 0,
-        "padding-block-end": 0
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 80,
+        "padding-block-end": 80
       }
     },
     "who_we_serve": {
@@ -164,7 +202,17 @@
                 "horizontal_alignment_flex_direction_column": "center",
                 "vertical_alignment_flex_direction_column": "flex-start",
                 "gap": 12,
-                "width": "fill"
+                "width": "fill",
+                "height": "fill",
+                "background_color": "#FCFCFC",
+                "border": "solid",
+                "border_width": 1,
+                "border_color": "#E7E4DC",
+                "border_radius": 14,
+                "padding-block-start": 24,
+                "padding-block-end": 24,
+                "padding-inline-start": 24,
+                "padding-inline-end": 24
               },
               "blocks": {
                 "icon": {
@@ -172,7 +220,7 @@
                   "settings": {
                     "icon": "serving_dish",
                     "width": 36,
-                    "icon_color": "#112B40"
+                    "icon_color": "#F9C635"
                   },
                   "blocks": {}
                 },
@@ -211,7 +259,17 @@
                 "horizontal_alignment_flex_direction_column": "center",
                 "vertical_alignment_flex_direction_column": "flex-start",
                 "gap": 12,
-                "width": "fill"
+                "width": "fill",
+                "height": "fill",
+                "background_color": "#FCFCFC",
+                "border": "solid",
+                "border_width": 1,
+                "border_color": "#E7E4DC",
+                "border_radius": 14,
+                "padding-block-start": 24,
+                "padding-block-end": 24,
+                "padding-inline-start": 24,
+                "padding-inline-end": 24
               },
               "blocks": {
                 "icon": {
@@ -219,7 +277,7 @@
                   "settings": {
                     "icon": "chat_bubble",
                     "width": 36,
-                    "icon_color": "#112B40"
+                    "icon_color": "#F9C635"
                   },
                   "blocks": {}
                 },
@@ -258,7 +316,17 @@
                 "horizontal_alignment_flex_direction_column": "center",
                 "vertical_alignment_flex_direction_column": "flex-start",
                 "gap": 12,
-                "width": "fill"
+                "width": "fill",
+                "height": "fill",
+                "background_color": "#FCFCFC",
+                "border": "solid",
+                "border_width": 1,
+                "border_color": "#E7E4DC",
+                "border_radius": 14,
+                "padding-block-start": 24,
+                "padding-block-end": 24,
+                "padding-inline-start": 24,
+                "padding-inline-end": 24
               },
               "blocks": {
                 "icon": {
@@ -266,7 +334,7 @@
                   "settings": {
                     "icon": "star",
                     "width": 36,
-                    "icon_color": "#112B40"
+                    "icon_color": "#F9C635"
                   },
                   "blocks": {}
                 },
@@ -305,7 +373,17 @@
                 "horizontal_alignment_flex_direction_column": "center",
                 "vertical_alignment_flex_direction_column": "flex-start",
                 "gap": 12,
-                "width": "fill"
+                "width": "fill",
+                "height": "fill",
+                "background_color": "#FCFCFC",
+                "border": "solid",
+                "border_width": 1,
+                "border_color": "#E7E4DC",
+                "border_radius": 14,
+                "padding-block-start": 24,
+                "padding-block-end": 24,
+                "padding-inline-start": 24,
+                "padding-inline-end": 24
               },
               "blocks": {
                 "icon": {
@@ -313,7 +391,7 @@
                   "settings": {
                     "icon": "box",
                     "width": 36,
-                    "icon_color": "#112B40"
+                    "icon_color": "#F9C635"
                   },
                   "blocks": {}
                 },
@@ -352,7 +430,17 @@
                 "horizontal_alignment_flex_direction_column": "center",
                 "vertical_alignment_flex_direction_column": "flex-start",
                 "gap": 12,
-                "width": "fill"
+                "width": "fill",
+                "height": "fill",
+                "background_color": "#FCFCFC",
+                "border": "solid",
+                "border_width": 1,
+                "border_color": "#E7E4DC",
+                "border_radius": 14,
+                "padding-block-start": 24,
+                "padding-block-end": 24,
+                "padding-inline-start": 24,
+                "padding-inline-end": 24
               },
               "blocks": {
                 "icon": {
@@ -360,7 +448,7 @@
                   "settings": {
                     "icon": "price_tag",
                     "width": 36,
-                    "icon_color": "#112B40"
+                    "icon_color": "#F9C635"
                   },
                   "blocks": {}
                 },
@@ -468,7 +556,10 @@
           "settings": {
             "label": "Schedule a Tasting",
             "link": "mailto:hello@backeli.com?subject=Schedule%20a%20Tasting",
-            "style_class": "button-secondary"
+            "style_class": "button-custom",
+            "custom_button_background": "rgba(0,0,0,0)",
+            "custom_button_text": "#FFFFFF",
+            "custom_button_border": "#FFFFFF"
           },
           "blocks": {}
         }
