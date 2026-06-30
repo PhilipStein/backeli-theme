@@ -8,6 +8,69 @@
  * ------------------------------------------------------------
  */{
   "sections": {
+    "hero_contact": {
+      "type": "hero",
+      "blocks": {
+        "heading": {
+          "type": "text",
+          "settings": {
+            "text": "<p>we'd love to hear from you</p>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "center",
+            "type_preset": "custom",
+            "font": "var(--font-heading--family)",
+            "font_size": "4.5rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "text_color": "{{ settings.color_palette.background }}"
+          },
+          "blocks": {}
+        },
+        "sub": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Whether you have questions or simply a craving for authentic German baking. We're always happy to help.</p>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "center",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "1.25rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "text_color": "{{ settings.color_palette.background }}"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": ["heading", "sub"],
+      "name": "t:names.hero",
+      "settings": {
+        "media_type_1": "image",
+        "image_1": "shopify://shop_images/contact-hero.png",
+        "media_type_2": "image",
+        "stack_media_on_mobile": false,
+        "custom_mobile_media": false,
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 24,
+        "section_width": "page-width",
+        "section_height": "medium",
+        "background_color": "rgba(0,0,0,0)",
+        "toggle_overlay": true,
+        "overlay_color": "#0000001A",
+        "overlay_style": "solid",
+        "padding-block-start": 100,
+        "padding-block-end": 100
+      }
+    },
     "main": {
       "type": "main-page",
       "blocks": {
@@ -136,10 +199,44 @@
         "padding-block-start": 32,
         "padding-block-end": 84
       }
+    },
+    "visit_us_contact": {
+      "type": "come-visit-us",
+      "settings": {
+        "heading": "come visit us",
+        "subheading": "<p>Pop in for warm Brötchen, rustic loaves, and pastries straight from the oven.</p><p>Mon–Fri 7am–6pm · Sat 8am–4pm</p>",
+        "heading_size": 56,
+        "subheading_size": 20,
+        "heading_color": "",
+        "subheading_color": "",
+        "address": "156 NE 28th St, Miami, FL 33137",
+        "phone": "(305) 555-0142",
+        "email": "hello@backeli.com",
+        "directions_label": "Get directions",
+        "directions_link": "https://www.google.com/maps/dir/?api=1&destination=156%20NE%2028th%20St%2C%20Miami%2C%20FL%2033137",
+        "call_label": "Call the bakery",
+        "call_link": "",
+        "social_label": "Follow along",
+        "instagram_url": "",
+        "facebook_url": "",
+        "map_address": "156 NE 28th St, Miami, FL 33137",
+        "map_zoom": 15,
+        "map_height": 420,
+        "map_embed_url": "",
+        "media_position": "right",
+        "column_gap": 64,
+        "section_width": "page-width",
+        "side_margin": 0,
+        "background_color": "#FCFCFC",
+        "padding-block-start": 72,
+        "padding-block-end": 72
+      }
     }
   },
   "order": [
+    "hero_contact",
     "main",
-    "form"
+    "form",
+    "visit_us_contact"
   ]
 }

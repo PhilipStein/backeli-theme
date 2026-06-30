@@ -183,12 +183,23 @@
     align-items: center;
   }
 
-  .visit-us--media-left .visit-us__content {
-    order: 2;
+  /* Explicitly place the two columns. Horizon's base `.section > *` rule otherwise
+     forces every direct child into its central grid column, collapsing both the
+     content and the map into column 2 (left column empty, map pushed below). */
+  .visit-us > .visit-us__content {
+    grid-column: 1;
   }
 
-  .visit-us--media-left .visit-us__map {
-    order: 1;
+  .visit-us > .visit-us__map {
+    grid-column: 2;
+  }
+
+  .visit-us--media-left > .visit-us__content {
+    grid-column: 2;
+  }
+
+  .visit-us--media-left > .visit-us__map {
+    grid-column: 1;
   }
 
   .visit-us__heading {
@@ -316,9 +327,9 @@
       gap: 2rem;
     }
 
-    .visit-us--media-left .visit-us__content,
-    .visit-us--media-left .visit-us__map {
-      order: 0;
+    .visit-us > .visit-us__content,
+    .visit-us > .visit-us__map {
+      grid-column: 1;
     }
 
     .visit-us__heading {
@@ -569,7 +580,7 @@
       "id": "padding-block-start",
       "label": "Top",
       "min": 0,
-      "max": 160,
+      "max": 100,
       "step": 1,
       "unit": "px",
       "default": 72
@@ -579,7 +590,7 @@
       "id": "padding-block-end",
       "label": "Bottom",
       "min": 0,
-      "max": 160,
+      "max": 100,
       "step": 1,
       "unit": "px",
       "default": 72

@@ -14,133 +14,202 @@
     "footer_m9NzUG": {
       "type": "footer",
       "blocks": {
-        "group_H6VpwJ": {
+        "col_shop": {
           "type": "group",
           "settings": {
             "content_direction": "column",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "align_baseline": false,
             "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 6,
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "background_media": "none",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "toggle_overlay": false,
-            "overlay_color": "#00000026",
-            "overlay_style": "solid",
-            "gradient_direction": "to top",
-            "open_in_new_tab": false,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "vertical_alignment_flex_direction_column": "flex-start",
+            "gap": 10,
+            "width": "fill"
           },
           "blocks": {
-            "text_LWt8Pz": {
+            "col_shop_heading": {
               "type": "text",
               "settings": {
-                "text": "<h2>Join our email list</h2>",
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
+                "text": "<h4>Shop</h4>",
                 "type_preset": "h4",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "alignment": "left",
+                "font": "var(--font-heading--family)",
+                "text_color": "#F9C635"
               },
               "blocks": {}
             },
-            "text_f9CFLH": {
+            "col_shop_links": {
               "type": "text",
               "settings": {
-                "text": "<p>Get exclusive deals and early access to new products.</p>",
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
+                "text": "<p><a href=\"/pages/shop\">Breads</a></p><p><a href=\"/pages/shop\">Rolls</a></p><p><a href=\"/pages/shop\">Sweet Pastries</a></p>",
                 "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "alignment": "left"
               },
               "blocks": {}
             }
           },
-          "block_order": [
-            "text_LWt8Pz",
-            "text_f9CFLH"
-          ]
+          "block_order": ["col_shop_heading", "col_shop_links"]
         },
-        "email_signup_crihX7": {
-          "type": "email-signup",
+        "col_backeli": {
+          "type": "group",
           "settings": {
-            "width": "fill",
-            "custom_width": 100,
-            "heading_preset": "h3",
-            "border_style": "all",
-            "input_style": "custom",
-            "border_width": 1,
-            "border_radius": 100,
-            "input_background_color": "{{ settings.color_palette.background }}",
-            "input_text_color": "{{ settings.color_palette.color1 }}",
-            "input_border_color": "{{ settings.color_palette.color2 }}",
-            "input_type_preset": "paragraph",
-            "style_class": "button-unstyled",
-            "display_type": "arrow",
-            "label": "Sign up",
-            "integrated_button": true,
-            "button_type_preset": "paragraph",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "content_direction": "column",
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "flex-start",
+            "gap": 10,
+            "width": "fill"
           },
-          "blocks": {}
+          "blocks": {
+            "col_backeli_heading": {
+              "type": "text",
+              "settings": {
+                "text": "<h4>Bäckeli</h4>",
+                "type_preset": "h4",
+                "alignment": "left",
+                "font": "var(--font-heading--family)",
+                "text_color": "#F9C635"
+              },
+              "blocks": {}
+            },
+            "col_backeli_links": {
+              "type": "text",
+              "settings": {
+                "text": "<p><a href=\"/pages/our-story\">Our Story</a></p><p><a href=\"/pages/wholesale\">Wholesale</a></p><p><a href=\"/pages/contact\">Contact</a></p>",
+                "type_preset": "rte",
+                "alignment": "left"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": ["col_backeli_heading", "col_backeli_links"]
+        },
+        "col_club": {
+          "type": "group",
+          "settings": {
+            "content_direction": "column",
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "flex-start",
+            "gap": 10,
+            "width": "fill"
+          },
+          "blocks": {
+            "col_club_heading": {
+              "type": "text",
+              "settings": {
+                "text": "<h4>Bäckeli Club</h4>",
+                "type_preset": "h4",
+                "alignment": "left",
+                "font": "var(--font-heading--family)",
+                "text_color": "#F9C635"
+              },
+              "blocks": {}
+            },
+            "col_club_links": {
+              "type": "text",
+              "settings": {
+                "text": "<p><a href=\"/pages/backeli-club\">How It Works</a></p>",
+                "type_preset": "rte",
+                "alignment": "left"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": ["col_club_heading", "col_club_links"]
+        },
+        "col_contact": {
+          "type": "group",
+          "settings": {
+            "content_direction": "column",
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "flex-start",
+            "gap": 10,
+            "width": "fill"
+          },
+          "blocks": {
+            "col_contact_heading": {
+              "type": "text",
+              "settings": {
+                "text": "<h4>Contact</h4>",
+                "type_preset": "h4",
+                "alignment": "left",
+                "font": "var(--font-heading--family)",
+                "text_color": "#F9C635"
+              },
+              "blocks": {}
+            },
+            "col_contact_text": {
+              "type": "text",
+              "settings": {
+                "text": "<p><a href=\"mailto:hello@backeli.com\">hello@backeli.com</a></p><p><a href=\"tel:+13055550142\">(305) 555-0142</a></p><p>Delivery in Miami-Dade</p>",
+                "type_preset": "rte",
+                "alignment": "left"
+              },
+              "blocks": {}
+            },
+            "col_contact_social": {
+              "type": "social-links",
+              "settings": {
+                "instagram_url": "https://www.instagram.com/",
+                "facebook_url": "https://www.facebook.com/",
+                "youtube_url": "",
+                "tiktok_url": "",
+                "twitter_url": ""
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": ["col_contact_heading", "col_contact_text", "col_contact_social"]
+        },
+        "footer_bottom": {
+          "type": "group",
+          "settings": {
+            "content_direction": "row",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "space-between",
+            "vertical_alignment": "center",
+            "gap": 16,
+            "width": "fill"
+          },
+          "blocks": {
+            "footer_wordmark": {
+              "type": "text",
+              "settings": {
+                "text": "<p>Bäckeli</p>",
+                "type_preset": "custom",
+                "alignment": "left",
+                "font": "var(--font-heading--family)",
+                "font_size": "2rem",
+                "text_color": "#F9C635"
+              },
+              "blocks": {}
+            },
+            "footer_tagline": {
+              "type": "text",
+              "settings": {
+                "text": "<p>Bäckeli — Authentic German Baking. Soo Bäckelicious.</p>",
+                "type_preset": "custom",
+                "alignment": "right",
+                "font": "var(--font-heading--family)",
+                "font_size": "1.125rem",
+                "text_color": "#F9C635"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": ["footer_wordmark", "footer_tagline"]
         }
       },
       "block_order": [
-        "group_H6VpwJ",
-        "email_signup_crihX7"
+        "col_shop",
+        "col_backeli",
+        "col_club",
+        "col_contact",
+        "footer_bottom"
       ],
       "name": "t:names.footer",
       "settings": {
         "section_width": "page-width",
-        "gap": 20,
-        "background_color": "{{ settings.color_palette.background }}",
-        "padding-block-start": 30,
-        "padding-block-end": 30
+        "gap": 32,
+        "background_color": "#112B40",
+        "padding-block-start": 64,
+        "padding-block-end": 40
       }
     },
     "footer_utilities_jLGE8U": {
@@ -149,7 +218,7 @@
         "footer_copyright_jweRK8": {
           "type": "footer-copyright",
           "settings": {
-            "show_powered_by": true,
+            "show_powered_by": false,
             "font_size": "0.75rem",
             "case": "none"
           },
@@ -162,31 +231,19 @@
             "case": "none"
           },
           "blocks": {}
-        },
-        "social_links_Ew63Kq": {
-          "type": "social-links",
-          "settings": {
-            "facebook_url": "https://www.facebook.com/",
-            "instagram_url": "https://www.instagram.com/",
-            "youtube_url": "https://www.youtube.com/",
-            "tiktok_url": "https://www.tiktok.com/",
-            "twitter_url": "https://x.com/"
-          },
-          "blocks": {}
         }
       },
       "block_order": [
         "footer_copyright_jweRK8",
-        "footer_policy_list_VCdnpa",
-        "social_links_Ew63Kq"
+        "footer_policy_list_VCdnpa"
       ],
       "name": "t:names.utilities",
       "settings": {
         "section_width": "page-width",
         "gap": 24,
         "divider_thickness": 1,
-        "divider_color": "{{ settings.color_palette.color2 }}",
-        "background_color": "{{ settings.color_palette.background }}",
+        "divider_color": "#1F3A4F",
+        "background_color": "#112B40",
         "padding-block-start": 20,
         "padding-block-end": 48
       }

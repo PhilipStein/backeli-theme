@@ -1,0 +1,154 @@
+{
+  "sections": {
+    "hero_shop": {
+      "type": "hero",
+      "blocks": {
+        "heading": {
+          "type": "text",
+          "settings": {
+            "text": "<p>our menu</p>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "center",
+            "type_preset": "custom",
+            "font": "var(--font-heading--family)",
+            "font_size": "4.5rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "text_color": "{{ settings.color_palette.background }}"
+          },
+          "blocks": {}
+        },
+        "sub": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Crafted in Germany. Finished fresh in Miami. Soo Bäckelicious.</p>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "center",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "1.25rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "text_color": "{{ settings.color_palette.background }}"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": ["heading", "sub"],
+      "name": "t:names.hero",
+      "settings": {
+        "media_type_1": "image",
+        "image_1": "shopify://shop_images/shop-hero-bread-board.jpg",
+        "media_type_2": "image",
+        "stack_media_on_mobile": false,
+        "custom_mobile_media": false,
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 24,
+        "section_width": "page-width",
+        "section_height": "medium",
+        "background_color": "rgba(0,0,0,0)",
+        "toggle_overlay": true,
+        "overlay_color": "#0000001A",
+        "overlay_style": "solid",
+        "padding-block-start": 100,
+        "padding-block-end": 100
+      }
+    },
+    "category_nav": {
+      "type": "category-nav",
+      "blocks": {
+        "c_all": {
+          "type": "category",
+          "settings": { "label": "All", "link": "shopify://collections/all" },
+          "blocks": {}
+        },
+        "c_breads": {
+          "type": "category",
+          "settings": { "label": "Signature Breads", "link": "" },
+          "blocks": {}
+        },
+        "c_rolls": {
+          "type": "category",
+          "settings": { "label": "Morning Rolls", "link": "" },
+          "blocks": {}
+        },
+        "c_pastries": {
+          "type": "category",
+          "settings": { "label": "Sweet & Savory Pastries", "link": "" },
+          "blocks": {}
+        },
+        "c_cakes": {
+          "type": "category",
+          "settings": { "label": "Traditional Cakes", "link": "" },
+          "blocks": {}
+        }
+      },
+      "block_order": ["c_all", "c_breads", "c_rolls", "c_pastries", "c_cakes"],
+      "name": "Category nav",
+      "settings": {
+        "sticky": true,
+        "alignment": "center",
+        "background_color": "",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "menu_placeholder": {
+      "type": "section",
+      "blocks": {
+        "ph_heading": {
+          "type": "text",
+          "settings": {
+            "text": "<h2>fresh from the oven</h2>",
+            "type_preset": "h2",
+            "alignment": "center",
+            "font": "var(--font-heading--family)"
+          },
+          "blocks": {}
+        },
+        "ph_text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Our full menu is being plated — signature breads, morning rolls, sweet &amp; savory pastries and traditional cakes arrive soon. Browse the catalog in the meantime.</p>",
+            "type_preset": "rte",
+            "alignment": "center",
+            "max_width": "narrow"
+          },
+          "blocks": {}
+        },
+        "ph_btn": {
+          "type": "button",
+          "settings": {
+            "label": "BROWSE CATALOG",
+            "link": "shopify://collections/all",
+            "style_class": "button"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": ["ph_heading", "ph_text", "ph_btn"],
+      "name": "t:names.section",
+      "settings": {
+        "content_direction": "column",
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 20,
+        "section_width": "page-width",
+        "section_height": "",
+        "background_color": "",
+        "padding-block-start": 80,
+        "padding-block-end": 80
+      }
+    }
+  },
+  "order": ["hero_shop", "category_nav", "menu_placeholder"]
+}

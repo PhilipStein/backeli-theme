@@ -157,10 +157,100 @@
         "padding-block-start": 70,
         "padding-block-end": 48
       }
+    },
+    "discover_VkR3pq": {
+      "type": "media-grid",
+      "blocks": {
+        "media_shop": {
+          "type": "media",
+          "settings": {
+            "image": "shopify://shop_images/menu-breads.png",
+            "image_ratio": "portrait",
+            "caption": "SHOP",
+            "caption_color": "",
+            "link": "/pages/shop"
+          }
+        },
+        "media_club": {
+          "type": "media",
+          "settings": {
+            "image": "shopify://shop_images/morning-club-delivery-v2.png",
+            "image_ratio": "portrait",
+            "caption": "BÄCKELI CLUB",
+            "caption_color": "",
+            "link": "/pages/backeli-club"
+          }
+        },
+        "media_hospitality": {
+          "type": "media",
+          "settings": {
+            "image": "shopify://shop_images/wholesale-hero-new.png",
+            "image_ratio": "portrait",
+            "caption": "HOSPITALITY",
+            "caption_color": "",
+            "link": "/pages/wholesale"
+          }
+        }
+      },
+      "block_order": [
+        "media_shop",
+        "media_club",
+        "media_hospitality"
+      ],
+      "name": "Media grid",
+      "settings": {
+        "heading": "discover Bäckeli",
+        "subheading": "Authentic German baking for every occasion.",
+        "header_alignment": "center",
+        "heading_color": "",
+        "subheading_color": "#4D6074",
+        "columns": 3,
+        "mobile_columns": "1",
+        "grid_gap": 16,
+        "section_width": "full-width",
+        "side_margin": 48,
+        "background_color": "",
+        "padding-block-start": 70,
+        "padding-block-end": 48
+      }
+    },
+    "visit_us_Lm8tnz": {
+      "type": "come-visit-us",
+      "settings": {
+        "heading": "come visit us",
+        "subheading": "<p>Pop in for warm Brötchen, rustic loaves, and pastries straight from the oven.</p>",
+        "heading_size": 56,
+        "subheading_size": 20,
+        "heading_color": "",
+        "subheading_color": "",
+        "address": "156 NE 28th St, Miami, FL 33137",
+        "phone": "(305) 555-0142",
+        "email": "hello@backeli.com",
+        "directions_label": "Get directions",
+        "directions_link": "https://www.google.com/maps/dir/?api=1&destination=156%20NE%2028th%20St%2C%20Miami%2C%20FL%2033137",
+        "call_label": "Call the bakery",
+        "call_link": "",
+        "social_label": "Follow along",
+        "instagram_url": "",
+        "facebook_url": "",
+        "map_address": "156 NE 28th St, Miami, FL 33137",
+        "map_zoom": 15,
+        "map_height": 420,
+        "map_embed_url": "",
+        "media_position": "right",
+        "column_gap": 64,
+        "section_width": "page-width",
+        "side_margin": 0,
+        "background_color": "#FCFCFC",
+        "padding-block-start": 72,
+        "padding-block-end": 72
+      }
     }
   },
   "order": [
     "hero_jVaWmY",
-    "media_grid_VPaiPD"
+    "media_grid_VPaiPD",
+    "discover_VkR3pq",
+    "visit_us_Lm8tnz"
   ]
 }

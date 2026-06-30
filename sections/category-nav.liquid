@@ -1,0 +1,150 @@
+{% comment %}
+  Category nav
+
+  A sticky horizontal bar of category links for the Shop / "our menu" page — mirrors the
+  prototype's sticky in-page category navigation. Each link is an editable block (label + URL),
+  so it can point at a collection, a page, or an on-page anchor. No products required.
+{% endcomment %}
+
+{% liquid
+  if section.settings.background_color != blank
+    render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
+  endif
+%}
+
+<div
+  class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
+></div>
+
+<nav
+  class="
+    category-nav
+    {% if section.settings.sticky %}category-nav--sticky{% endif %}
+    {% if section.settings.background_color != blank %}color-custom-{{ section.id }}{% endif %}
+  "
+  style="
+    {% render 'spacing-style', settings: section.settings %}
+    --category-nav-align: {{ section.settings.alignment }};
+  "
+  data-testid="category-nav"
+  aria-label="Menu categories"
+>
+  <ul class="category-nav__list" role="list">
+    {% for block in section.blocks %}
+      <li class="category-nav__item" {{ block.shopify_attributes }}>
+        {% if block.settings.link != blank %}
+          <a class="category-nav__link" href="{{ block.settings.link }}">{{ block.settings.label }}</a>
+        {% else %}
+          <span class="category-nav__link">{{ block.settings.label }}</span>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</nav>
+
+{% stylesheet %}
+  .category-nav {
+    position: relative;
+    z-index: 5;
+  }
+
+  .category-nav--sticky {
+    position: sticky;
+    top: var(--header-height, 0px);
+    background: var(--color-background);
+  }
+
+  .category-nav__list {
+    list-style: none;
+    margin: 0;
+    padding-inline: var(--page-margin, 1rem);
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 1.75rem;
+    justify-content: var(--category-nav-align, center);
+    border-block-end: 1px solid var(--color-border, #e7e4dc);
+  }
+
+  .category-nav__link {
+    display: inline-block;
+    padding-block: 1rem;
+    font-family: var(--font-heading--family);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.8rem;
+    color: var(--color-foreground);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.15s ease;
+  }
+
+  .category-nav__link:hover {
+    color: #f9c635;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Category nav",
+  "tag": "section",
+  "class": "section-wrapper",
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Category" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "sticky",
+      "label": "Stick below the header on scroll",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Alignment",
+      "options": [
+        { "value": "flex-start", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    { "type": "range", "id": "padding-block-start", "label": "Top", "min": 0, "max": 60, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding-block-end", "label": "Bottom", "min": 0, "max": 60, "step": 1, "unit": "px", "default": 0 }
+  ],
+  "presets": [
+    {
+      "name": "Category nav",
+      "category": "Storefront",
+      "blocks": [
+        { "type": "category", "settings": { "label": "All", "link": "shopify://collections/all" } },
+        { "type": "category", "settings": { "label": "Signature Breads" } },
+        { "type": "category", "settings": { "label": "Morning Rolls" } },
+        { "type": "category", "settings": { "label": "Sweet & Savory Pastries" } },
+        { "type": "category", "settings": { "label": "Traditional Cakes" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
