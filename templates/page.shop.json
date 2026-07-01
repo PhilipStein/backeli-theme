@@ -75,116 +75,44 @@
         "padding-block-end": 100
       }
     },
-    "category_nav": {
-      "type": "category-nav",
+    "shop_menu": {
+      "type": "shop-menu",
       "blocks": {
-        "c_all": {
+        "cat_breads": {
           "type": "category",
-          "settings": {
-            "label": "All",
-            "link": "shopify://collections/all"
-          }
+          "settings": { "collection": "signature-breads" }
         },
-        "c_breads": {
+        "cat_rolls": {
           "type": "category",
-          "settings": {
-            "label": "Signature Breads",
-            "link": ""
-          }
+          "settings": { "collection": "morning-rolls" }
         },
-        "c_rolls": {
+        "cat_pastries": {
           "type": "category",
-          "settings": {
-            "label": "Morning Rolls",
-            "link": ""
-          }
+          "settings": { "collection": "sweet-savory-pastries" }
         },
-        "c_pastries": {
+        "cat_cakes": {
           "type": "category",
-          "settings": {
-            "label": "Sweet & Savory Pastries",
-            "link": ""
-          }
-        },
-        "c_cakes": {
-          "type": "category",
-          "settings": {
-            "label": "Traditional Cakes",
-            "link": ""
-          }
+          "settings": { "collection": "traditional-cakes" }
         }
       },
       "block_order": [
-        "c_all",
-        "c_breads",
-        "c_rolls",
-        "c_pastries",
-        "c_cakes"
+        "cat_breads",
+        "cat_rolls",
+        "cat_pastries",
+        "cat_cakes"
       ],
-      "name": "Category nav",
+      "name": "Shop menu",
       "settings": {
+        "show_all_tab": true,
+        "all_label": "All",
         "sticky": true,
-        "alignment": "center",
-        "background_color": "",
-        "padding-block-start": 0,
-        "padding-block-end": 0
-      }
-    },
-    "menu_placeholder": {
-      "type": "section",
-      "blocks": {
-        "ph_heading": {
-          "type": "text",
-          "settings": {
-            "text": "<h2>fresh from the oven</h2>",
-            "alignment": "center",
-            "type_preset": "h2",
-            "font": "var(--font-heading--family)"
-          },
-          "blocks": {}
-        },
-        "ph_text": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Our full menu is being plated — signature breads, morning rolls, sweet &amp; savory pastries and traditional cakes arrive soon. Browse the catalog in the meantime.</p>",
-            "max_width": "narrow",
-            "alignment": "center",
-            "type_preset": "rte"
-          },
-          "blocks": {}
-        },
-        "ph_btn": {
-          "type": "button",
-          "settings": {
-            "label": "BROWSE CATALOG",
-            "link": "shopify://collections/all",
-            "style_class": "button"
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ph_heading",
-        "ph_text",
-        "ph_btn"
-      ],
-      "name": "t:names.section",
-      "settings": {
-        "content_direction": "column",
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 20,
-        "section_width": "page-width",
-        "section_height": "",
-        "background_color": "",
-        "padding-block-start": 80,
-        "padding-block-end": 80
+        "card_cta": "View",
+        "empty_text": "Fresh batch coming soon."
       }
     }
   },
   "order": [
     "hero_shop",
-    "category_nav",
-    "menu_placeholder"
+    "shop_menu"
   ]
 }

@@ -1,0 +1,539 @@
+{% comment %}
+  Shop menu
+
+  In-page, category-filtered product grid for the "our menu" shop page. A sticky tab bar
+  (All + one tab per category block) filters the product groups in place with no page reload —
+  mirrors the Lovable prototype. Each block points at a collection; products come from the store.
+
+  Each variant tile shows inline specs and an "Add" popup (weight / texture / flavor + quantity +
+  add-to-cart), driven by variant metafields in the "specs" namespace:
+  serves, crust, crumb, diet, weight (single line text) and texture, flavor (list of text).
+{% endcomment %}
+
+<div id="shop-menu-{{ section.id }}" class="shop-menu" data-shop-menu>
+  <nav
+    class="shop-menu__nav{% if section.settings.sticky %} shop-menu__nav--sticky{% endif %}"
+    aria-label="Menu categories"
+  >
+    <ul class="shop-menu__tabs" role="list">
+      {%- if section.settings.show_all_tab -%}
+        <li>
+          <button type="button" class="shop-menu__tab is-active" data-filter="all" aria-pressed="true">
+            {{ section.settings.all_label | escape }}
+          </button>
+        </li>
+      {%- endif -%}
+      {%- for block in section.blocks -%}
+        {%- assign col = block.settings.collection -%}
+        {%- if col != blank -%}
+          <li {{ block.shopify_attributes }}>
+            <button type="button" class="shop-menu__tab" data-filter="{{ col.handle }}" aria-pressed="false">
+              {{ block.settings.heading | default: col.title | escape }}
+            </button>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </nav>
+
+  <div class="shop-menu__groups">
+    {%- for block in section.blocks -%}
+      {%- assign col = block.settings.collection -%}
+      {%- if col != blank -%}
+        {%- assign is_cream = forloop.index0 | modulo: 2 -%}
+        <section
+          class="shop-menu__group{% if is_cream == 1 %} shop-menu__group--cream{% endif %}"
+          data-group="{{ col.handle }}"
+        >
+          <div class="shop-menu__inner">
+            <header class="shop-menu__head">
+              <h2 class="shop-menu__title">{{ block.settings.heading | default: col.title | escape }}</h2>
+              {%- assign tagline = block.settings.tagline -%}
+              {%- if tagline == blank -%}
+                {%- assign tagline = col.description -%}
+              {%- endif -%}
+              {%- if tagline != blank -%}
+                <p class="shop-menu__tagline">{{ tagline }}</p>
+              {%- endif -%}
+            </header>
+
+            <div class="shop-menu__grid">
+              {%- for product in col.products -%}
+                {%- assign vcount = product.variants.size -%}
+                <article class="shop-card{% if vcount > 1 %} shop-card--wide{% endif %}">
+                  <div class="shop-card__head">
+                    <a class="shop-card__title-link" href="{{ product.url }}">{{ product.title | escape }}</a>
+                    <span class="shop-card__price">{{ product.price | money }}</span>
+                  </div>
+
+                  <div class="shop-card__tiles{% if vcount > 1 %} shop-card__tiles--split{% endif %}">
+                    {%- for variant in product.variants -%}
+                      {%- assign vimg = variant.image | default: product.featured_image -%}
+                      {%- assign mf = variant.metafields.specs -%}
+                      <div class="shop-tile">
+                        <a
+                          class="shop-tile__imglink"
+                          href="{{ product.url }}"
+                          aria-label="{{ product.title | escape }} — {{ variant.title | escape }}"
+                        >
+                          <span class="shop-tile__img">
+                            {%- if vimg -%}
+                              <img src="{{ vimg | image_url: width: 640 }}" alt="{{ variant.title | escape }}" loading="lazy" width="640" height="640">
+                            {%- endif -%}
+                          </span>
+                        </a>
+
+                        {%- unless variant.title == 'Default Title' -%}
+                          <p class="shop-tile__variant">{{ variant.title | escape }}</p>
+                        {%- endunless -%}
+
+                        {%- if mf.serves.value != blank or mf.crust.value != blank or mf.crumb.value != blank or mf.diet.value != blank -%}
+                          <div class="shop-tile__specs">
+                            {%- if mf.serves.value != blank -%}
+                              <p class="shop-tile__serves">{{ mf.serves.value }}</p>
+                            {%- endif -%}
+                            <div class="shop-tile__specrow">
+                              {%- if mf.crust.value != blank -%}<span>{{ mf.crust.value }}</span>{%- endif -%}
+                              {%- if mf.crumb.value != blank -%}<span>{{ mf.crumb.value }}</span>{%- endif -%}
+                              {%- if mf.diet.value != blank -%}<span>{{ mf.diet.value }}</span>{%- endif -%}
+                            </div>
+                          </div>
+                        {%- endif -%}
+
+                        <div class="shop-tile__addwrap" data-add>
+                          <button type="button" class="shop-tile__add" aria-expanded="false">
+                            <span>{{ section.settings.add_label | escape }}</span>
+                            <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 6l6 6-6 6"/></svg>
+                          </button>
+
+                          <div class="shop-tile__popup" role="dialog" aria-label="{{ variant.title | escape }} details">
+                            <div class="shop-tile__pinfo">
+                              <div class="shop-tile__phead">
+                                <span class="shop-tile__pname">{{ variant.title | escape }}</span>
+                                <span class="shop-tile__pprice">{{ product.price | money }}</span>
+                              </div>
+                              {%- if mf.weight.value != blank -%}
+                                <div class="shop-tile__pblock">
+                                  <p class="shop-tile__plabel">Weight</p>
+                                  <p class="shop-tile__pmuted">{{ mf.weight.value }}</p>
+                                </div>
+                              {%- endif -%}
+                              {%- if mf.texture.value != blank -%}
+                                <div class="shop-tile__pblock">
+                                  <p class="shop-tile__plabel">Texture</p>
+                                  <ul class="shop-tile__plist">
+                                    {%- for t in mf.texture.value -%}<li>{{ t }}</li>{%- endfor -%}
+                                  </ul>
+                                </div>
+                              {%- endif -%}
+                              {%- if mf.flavor.value != blank -%}
+                                <div class="shop-tile__pblock">
+                                  <p class="shop-tile__plabel">Flavor</p>
+                                  <ul class="shop-tile__plist">
+                                    {%- for f in mf.flavor.value -%}<li>{{ f }}</li>{%- endfor -%}
+                                  </ul>
+                                </div>
+                              {%- endif -%}
+                            </div>
+
+                            <div class="shop-tile__pbuy">
+                              <span class="shop-tile__pimg">
+                                {%- if vimg -%}
+                                  <img src="{{ vimg | image_url: width: 420 }}" alt="{{ variant.title | escape }}" loading="lazy" width="420" height="420">
+                                {%- endif -%}
+                              </span>
+                              {%- assign form_id = 'ShopAdd-' | append: variant.id -%}
+                              <product-form-component
+                                class="shop-tile__form"
+                                data-section-id="{{ section.id }}"
+                                data-product-id="{{ product.id }}"
+                                data-product-url="{{ product.url }}"
+                                on:submit="/handleSubmit"
+                                data-quantity-default="1"
+                              >
+                                <div class="visually-hidden" aria-live="assertive" role="status" aria-atomic="true" ref="liveRegion"></div>
+                                {%- form 'product', product, id: form_id, class: 'shop-tile__buyform', data-type: 'add-to-cart-form' -%}
+                                  <input type="hidden" name="id" ref="variantId" value="{{ variant.id }}">
+                                  <span class="product-form-text__error hidden" ref="addToCartTextError"></span>
+                                  <div class="shop-tile__qty">
+                                    <button type="button" class="shop-tile__qbtn" data-qstep="-1" aria-label="Decrease quantity">&minus;</button>
+                                    <input class="shop-tile__qinput" type="number" name="quantity" value="1" min="1" inputmode="numeric" aria-label="Quantity">
+                                    <button type="button" class="shop-tile__qbtn" data-qstep="1" aria-label="Increase quantity">+</button>
+                                  </div>
+                                  <add-to-cart-component ref="addToCartButtonContainer" data-add-to-cart-animation="false">
+                                    <button type="submit" name="add" ref="addToCartButton" on:click="/handleClick" class="shop-tile__addcart">Add to cart</button>
+                                  </add-to-cart-component>
+                                {%- endform -%}
+                              </product-form-component>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    {%- endfor -%}
+                  </div>
+                </article>
+              {%- else -%}
+                <p class="shop-menu__empty">{{ section.settings.empty_text | escape }}</p>
+              {%- endfor -%}
+            </div>
+          </div>
+        </section>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+<script>
+  (function () {
+    var root = document.getElementById('shop-menu-{{ section.id }}');
+    if (!root) return;
+
+    // --- Category filter ---
+    var tabs = root.querySelectorAll('.shop-menu__tab');
+    var groups = root.querySelectorAll('.shop-menu__group');
+    function applyFilter(filter) {
+      for (var i = 0; i < groups.length; i++) {
+        groups[i].hidden = !(filter === 'all' || groups[i].getAttribute('data-group') === filter);
+      }
+      for (var j = 0; j < tabs.length; j++) {
+        var on = tabs[j].getAttribute('data-filter') === filter;
+        tabs[j].classList.toggle('is-active', on);
+        tabs[j].setAttribute('aria-pressed', on ? 'true' : 'false');
+      }
+    }
+    tabs.forEach(function (t) {
+      t.addEventListener('click', function () { applyFilter(t.getAttribute('data-filter')); });
+    });
+
+    // --- Quantity steppers ---
+    root.querySelectorAll('.shop-tile__qbtn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var input = btn.parentElement.querySelector('.shop-tile__qinput');
+        var v = (parseInt(input.value, 10) || 1) + parseInt(btn.getAttribute('data-qstep'), 10);
+        input.value = v < 1 ? 1 : v;
+      });
+    });
+
+    // --- Add popup: click/tap toggle (hover handled by CSS) ---
+    function closeAll() {
+      root.querySelectorAll('.shop-tile__addwrap.is-open').forEach(function (w) {
+        w.classList.remove('is-open');
+        var b = w.querySelector('.shop-tile__add');
+        if (b) b.setAttribute('aria-expanded', 'false');
+      });
+    }
+    root.querySelectorAll('.shop-tile__add').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var wrap = btn.closest('.shop-tile__addwrap');
+        var isOpen = wrap.classList.contains('is-open');
+        closeAll();
+        if (!isOpen) { wrap.classList.add('is-open'); btn.setAttribute('aria-expanded', 'true'); }
+      });
+    });
+    // Close the popup when Add to cart is clicked (the cart drawer takes over).
+    root.querySelectorAll('.shop-tile__addcart').forEach(function (btn) {
+      btn.addEventListener('click', function () { setTimeout(closeAll, 0); });
+    });
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.shop-tile__addwrap')) closeAll();
+    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeAll(); });
+  })();
+</script>
+
+{% stylesheet %}
+  .shop-menu {
+    --sm-ink: #112b40;
+    --sm-cream: #fcfcfc;
+    --sm-yellow: #f9c635;
+    --sm-border: #e7e4dc;
+    --sm-muted: #6b7280;
+  }
+
+  .shop-menu__nav {
+    position: relative;
+    z-index: 5;
+    background: var(--color-background, #fff);
+  }
+
+  .shop-menu__nav--sticky {
+    position: sticky;
+    top: var(--header-height, 0px);
+  }
+
+  .shop-menu__tabs {
+    list-style: none;
+    margin: 0;
+    padding: 0 var(--page-margin, 1.5rem);
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 1.5rem;
+    justify-content: center;
+    overflow-x: auto;
+    border-block-end: 1px solid var(--sm-border);
+  }
+
+  .shop-menu__tab {
+    appearance: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 1rem 0;
+    font-family: var(--font-heading--family);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.8rem;
+    color: var(--sm-ink);
+    white-space: nowrap;
+    transition: color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .shop-menu__tab:hover { color: var(--sm-yellow); }
+
+  .shop-menu__tab.is-active {
+    color: var(--sm-yellow);
+    box-shadow: inset 0 -2px 0 var(--sm-yellow);
+  }
+
+  .shop-menu__group { padding-block: 3.5rem; }
+  .shop-menu__group[hidden] { display: none !important; }
+  .shop-menu__group--cream { background: var(--sm-cream); }
+
+  .shop-menu__inner {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding-inline: var(--page-margin, 1.5rem);
+  }
+
+  .shop-menu__head { text-align: center; margin-bottom: 2.5rem; }
+
+  .shop-menu__title {
+    font-family: var(--font-heading--family);
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    color: var(--sm-ink);
+    text-transform: lowercase;
+    margin: 0;
+    line-height: 1.05;
+  }
+
+  .shop-menu__tagline { margin: 0.75rem auto 0; max-width: 36rem; color: var(--sm-muted); }
+  .shop-menu__empty { text-align: center; color: var(--sm-muted); grid-column: 1 / -1; }
+
+  .shop-menu__grid {
+    display: grid;
+    gap: 2.5rem 2rem;
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  @media (min-width: 750px) {
+    .shop-menu__grid { grid-template-columns: repeat(2, 1fr); }
+    .shop-card--wide { grid-column: span 2; }
+  }
+
+  @media (min-width: 990px) {
+    .shop-menu__grid { grid-template-columns: repeat(3, 1fr); }
+    .shop-card--wide { grid-column: span 2; }
+  }
+
+  .shop-card { display: flex; flex-direction: column; }
+
+  .shop-card__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(17, 43, 64, 0.25);
+  }
+
+  .shop-card__title-link {
+    font-family: var(--font-heading--family);
+    font-size: 1.35rem;
+    color: var(--sm-ink);
+    line-height: 1.1;
+    text-decoration: none;
+  }
+  .shop-card__title-link:hover { color: var(--sm-yellow); }
+
+  .shop-card__price {
+    font-family: var(--font-heading--family);
+    letter-spacing: 0.12em;
+    font-size: 1.35rem;
+    color: var(--sm-ink);
+    white-space: nowrap;
+  }
+
+  .shop-card__tiles { display: grid; grid-template-columns: 1fr; gap: 2.5rem; }
+  .shop-card__tiles--split { grid-template-columns: repeat(2, 1fr); }
+
+  .shop-tile { display: flex; flex-direction: column; }
+
+  .shop-tile__imglink { display: block; }
+  .shop-tile__img { display: block; overflow: hidden; }
+  .shop-tile__img img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    background: #f2efe9;
+    transition: transform 0.7s ease;
+  }
+  .shop-tile__imglink:hover .shop-tile__img img { transform: scale(1.05); }
+
+  .shop-tile__variant {
+    margin: 0.85rem 0 0;
+    font-family: var(--font-heading--family);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.8rem;
+    color: var(--sm-ink);
+  }
+
+  .shop-tile__specs { margin-top: 0.6rem; display: flex; flex-direction: column; gap: 0.4rem; }
+  .shop-tile__serves { margin: 0; font-size: 0.9rem; color: var(--sm-muted); letter-spacing: 0.01em; }
+  .shop-tile__specrow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.85rem;
+    font-size: 0.9rem;
+    color: var(--sm-muted);
+  }
+  .shop-tile__specrow span { white-space: nowrap; }
+
+  .shop-tile__addwrap { position: relative; margin-top: 0.85rem; }
+
+  .shop-tile__add {
+    appearance: none;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--font-heading--family);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 0.8rem;
+    color: var(--sm-ink);
+    transition: color 0.15s ease;
+  }
+  .shop-tile__add:hover { color: var(--sm-yellow); text-decoration: underline; text-underline-offset: 3px; }
+
+  .shop-tile__popup {
+    display: none;
+    position: absolute;
+    z-index: 40;
+    /* Open upward, over the product image, so it's never cut off at the viewport bottom. */
+    bottom: calc(100% + 0.4rem);
+    left: 0;
+    width: min(30rem, 86vw);
+    max-height: min(32rem, 78vh);
+    overflow-y: auto;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 1.25rem;
+    padding: 1.25rem;
+    text-align: left;
+    background: #fff;
+    border: 1px solid var(--sm-border);
+    box-shadow: 0 -18px 44px rgba(17, 43, 64, 0.16);
+  }
+  /* invisible bridge so hover survives the gap between the trigger and the popup above it */
+  .shop-tile__addwrap::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 100%;
+    width: 10rem;
+    height: 0.5rem;
+    display: none;
+  }
+  .shop-tile__addwrap:hover::after { display: block; }
+  .shop-tile__addwrap:hover .shop-tile__popup,
+  .shop-tile__addwrap.is-open .shop-tile__popup { display: grid; }
+
+  @media (min-width: 750px) {
+    .shop-tile:last-child .shop-tile__popup { left: auto; right: 0; }
+  }
+
+  .shop-tile__pinfo { display: flex; flex-direction: column; gap: 0.85rem; font-size: 0.85rem; }
+  .shop-tile__phead { display: flex; align-items: baseline; gap: 0.6rem; }
+  .shop-tile__pname { font-family: var(--font-heading--family); font-size: 1.05rem; color: var(--sm-ink); }
+  .shop-tile__pprice { font-family: var(--font-heading--family); font-size: 1.05rem; color: var(--sm-ink); white-space: nowrap; }
+  .shop-tile__plabel { margin: 0 0 0.15rem; font-weight: 700; color: var(--sm-ink); }
+  .shop-tile__pmuted { margin: 0; color: var(--sm-muted); }
+  .shop-tile__plist { margin: 0; padding-left: 1rem; color: var(--sm-muted); display: flex; flex-direction: column; gap: 0.2rem; }
+
+  .shop-tile__pbuy { display: flex; flex-direction: column; gap: 0.75rem; }
+  .shop-tile__pimg { display: block; overflow: hidden; }
+  .shop-tile__pimg img { display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; background: #f2efe9; }
+
+  .shop-tile__form { display: block; }
+  .shop-tile__buyform { display: flex; flex-direction: column; gap: 0.6rem; margin: 0; }
+  .shop-tile__qty { display: flex; align-items: center; justify-content: center; border: 1px solid rgba(17, 43, 64, 0.2); }
+  .shop-tile__qbtn {
+    appearance: none; background: none; border: none; cursor: pointer;
+    padding: 0.4rem 0.7rem; font-size: 1rem; color: var(--sm-ink); line-height: 1;
+  }
+  .shop-tile__qbtn:hover { background: var(--sm-cream); }
+  .shop-tile__qinput {
+    width: 3rem; text-align: center; border: none; padding: 0.4rem 0;
+    font-size: 0.9rem; color: var(--sm-ink); -moz-appearance: textfield;
+  }
+  .shop-tile__qinput::-webkit-outer-spin-button,
+  .shop-tile__qinput::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+  .shop-tile__addcart {
+    appearance: none; cursor: pointer;
+    background: var(--sm-yellow); color: var(--sm-ink); border: none;
+    padding: 0.7rem 1rem;
+    font-family: var(--font-heading--family);
+    text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.8rem;
+    transition: filter 0.15s ease;
+  }
+  .shop-tile__addcart:hover { filter: brightness(0.94); }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Shop menu",
+  "tag": "section",
+  "class": "section-wrapper shop-menu-section",
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "text", "id": "heading", "label": "Heading override", "info": "Defaults to the collection title." },
+        { "type": "text", "id": "tagline", "label": "Tagline", "info": "Defaults to the collection description." }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    { "type": "checkbox", "id": "show_all_tab", "label": "Show \"All\" tab", "default": true },
+    { "type": "text", "id": "all_label", "label": "\"All\" tab label", "default": "All" },
+    { "type": "checkbox", "id": "sticky", "label": "Stick tabs below header on scroll", "default": true },
+    { "type": "text", "id": "add_label", "label": "Add button label", "default": "Add" },
+    { "type": "text", "id": "empty_text", "label": "Empty category text", "default": "Fresh batch coming soon." }
+  ],
+  "presets": [
+    {
+      "name": "Shop menu",
+      "category": "Storefront",
+      "blocks": [
+        { "type": "category" },
+        { "type": "category" },
+        { "type": "category" },
+        { "type": "category" }
+      ]
+    }
+  ]
+}
+{% endschema %}
